@@ -1,4 +1,4 @@
-package com.jodel.jodel;
+package com.example.jodel;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
