@@ -11,20 +11,18 @@ public class Vote {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
 
-    private int direction;
-
     @ManyToOne
     @JoinColumn (name="f_comment",referencedColumnName = "id")
-
     Comment comment;
 
     @ManyToOne
     @JoinColumn (name="f_jodel",referencedColumnName = "id")
-
     Jodel jodel;
 
     String f_user;
+    private int direction;
 
+    
 
     
 
