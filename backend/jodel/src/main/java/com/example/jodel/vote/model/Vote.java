@@ -47,4 +47,14 @@ public class Vote {
         this.jodel = jodel;
     }
 
+    public void setF_user(UserAccount user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        String text = "vote{" + "id=" + id + ", direction=" + direction + ",f_jodel=" + jodel.getId() + "}";
+        return text;
+
+    }
 }

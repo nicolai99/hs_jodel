@@ -19,3 +19,9 @@ Es gibt unbegrenzt viele Kommentare zu jedem Jodel, diese können:
 - erstellt werden
 - up and down gevoted also 1 oder -1, der jeweilige Vote muss ersetzt werden !
 - haben einen Ersteller und ein Erstellzeitpunkt
+
+## Hinweise
+
+### Starten im dev mode
+
+mvn spring-boot:run -Dspring-boot.run.profiles=dev

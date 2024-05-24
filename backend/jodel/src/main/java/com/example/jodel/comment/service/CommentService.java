@@ -3,10 +3,12 @@ package com.example.jodel.comment.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.jodel.comment.model.Comment;
 import com.example.jodel.comment.repository.CommentRepository;
 
+@Service
 public class CommentService {
 
     @Autowired
