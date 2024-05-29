@@ -13,11 +13,11 @@ public class Comment {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "f_jodel", referencedColumnName = "id")
+    @JoinColumn(name = "f_jodel")
     Jodel jodel;
 
     @OneToOne
-    @JoinColumn(name = "f_user", referencedColumnName = "id")
+    @JoinColumn(name = "f_user")
     UserAccount user;
 
     String text;

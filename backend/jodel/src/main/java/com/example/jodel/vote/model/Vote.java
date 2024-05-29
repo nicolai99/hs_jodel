@@ -14,15 +14,15 @@ public class Vote {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "f_comment", referencedColumnName = "id")
+    @JoinColumn(name = "f_comment")
     Comment comment;
 
     @ManyToOne
-    @JoinColumn(name = "f_jodel", referencedColumnName = "id")
+    @JoinColumn(name = "f_jodel")
     Jodel jodel;
 
     @ManyToOne
-    @JoinColumn(name = "f_user", referencedColumnName = "id")
+    @JoinColumn(name = "f_user")
     UserAccount user;
 
     private int direction;

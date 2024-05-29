@@ -16,11 +16,11 @@ public class Jodel {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "f_city", referencedColumnName = "id")
+    @JoinColumn(name = "f_city")
     City city;
 
     @ManyToOne
-    @JoinColumn(name = "f_user", referencedColumnName = "id")
+    @JoinColumn(name = "f_user")
     UserAccount user;
 
     String text;

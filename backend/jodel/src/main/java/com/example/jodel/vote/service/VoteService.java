@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.jodel.exception.*;
 
-import com.example.jodel.*;
 import com.example.jodel.jodel.model.*;
 import com.example.jodel.jodel.service.*;
 import com.example.jodel.user.model.*;
@@ -38,7 +37,7 @@ public class VoteService {
     }
 
     public Vote setVote(long f_comment, long f_jodel, String f_user, int direction)
-            throws JodelException.VoteDirectionExists {
+            throws JodelException {
 
         Jodel jodel = jodelService.getJodelById(f_jodel).orElseThrow(() -> new RuntimeException("Jodel not found"));
         UserAccount user = userAccountService.getUserAccountByID(f_user)
@@ -48,14 +47,14 @@ public class VoteService {
         Vote vote;
 
         if (existingVoteOpt.isPresent()) {
-            // Wenn ein Vote existiert, laden Sie diesen
+            // Wenn ein Vote existiert, lade diesen
             vote = existingVoteOpt.get();
             if (vote.getDirection() != direction) {
-                // Wenn die Direction unterschiedlich ist, aktualisieren Sie diese
+                // Wenn die Direction unterschiedlich ist, aktualisieren iese
                 vote.setDirection(direction);
             } else {
-                // Wenn die Direction gleich ist, müssen Sie nichts ändern
-                throw new JodelException.VoteDirectionExists();
+                // Wenn die Direction gleich ist
+                throw new JodelException();
             }
         } else {
             // Wenn kein Vote existiert, erstellen Sie einen neuen

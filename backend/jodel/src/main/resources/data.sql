@@ -8,6 +8,7 @@ INSERT into user_account (id,name) values ('UserId2','linus');
 /*Jodel*/
 INSERT into jodel (id,f_city,f_user,text,timestemp) values (1,1,'UserId1','Das ist das erste Jodel von nicolai, cool oder?','2024-05-23 15:30:45');
 INSERT into jodel (id,f_city,f_user,text,timestemp) values (2,1,'UserId2','Das ist das erste Jodel von linus, cool oder?','2024-05-23 15:30:45');
+ALTER TABLE jodel ALTER COLUMN id RESTART WITH 3;
 
 /*Comments*/
 INSERT into comment (id,f_jodel,f_user,text,timestemp) values (1,1,'UserId1','Das ist ein Kommentar zum ersten Jodel','2024-05-23 15:30:45');
