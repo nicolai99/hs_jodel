@@ -1,0 +1,60 @@
+   .post {
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    color: white;
+    position: relative;
+  }
+  
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .post-username {
+    font-weight: bold;
+  }
+  
+  .post-time {
+    font-size: 12px;
+  }
+  
+  .post-text {
+    white-space: pre-line;
+    margin-bottom: 10px;
+  }
+  
+  .post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .post-karma {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    /* font-weight: bold; */
+    font-size: 18px;
+  }
+  
+  .vote-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .comment-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .comment-button svg {
+    color: white;
+  }

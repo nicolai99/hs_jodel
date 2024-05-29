@@ -1,45 +1,66 @@
-.App {
-  text-align: center;
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.header {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 3px solid #ECECEC;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* .header {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid #ECECEC;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding-top: 10px;
+  padding-bottom: 10px;
+} */
+
+.header h1 {
+  margin: 0;
+  font-weight: 200;
+  color: #FF8D00;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.new-post-button {
+  color: #FF8D00;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.filter {
+  margin-bottom: 20px;
+}
+
+.filter select {
+  padding: 5px;
+  font-size: 16px;
+  color: black;
+  /* background-color: none;
+  border-radius: 5px;
+  color: #FF8D00; */
+}
+
+/* .posts {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-.jodel{
-  background-image: url("Jodel_Logo.png");
-  background-size: 100%;
-  width: 200px;
-  height:200px;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+} */
