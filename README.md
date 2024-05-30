@@ -24,9 +24,9 @@ Link zum Prototyp der App (mit Figma):
 
 - https://www.figma.com/design/y7ymbjnrYof53G8lXBUIFR/SWA---Jodel?node-id=0-1&t=pY7bDe0HZ3BGvaWF-1
 
-
 ## Hinweise
 
 ### Starten im dev mode
 
+im Verzeichnis /backend/jodel \
 mvn spring-boot:run -Dspring-boot.run.profiles=dev

@@ -47,7 +47,7 @@ class JodelApplicationTests {
 		}
 
 		System.out.println(
-				"Summe der Votes fuer den Jodel: " + vote.getSumVoteFromJodel(jodel.getJodelById(1).orElseThrow()));
+				"Summe der Votes fuer den Jodel: " + vote.getSumVoteFromJodel(1));
 
 	}
 }

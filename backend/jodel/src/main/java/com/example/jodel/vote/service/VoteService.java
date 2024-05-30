@@ -27,8 +27,7 @@ public class VoteService {
         return rep.findById(id);
     }
 
-    public int getSumVoteFromJodel(Jodel jodel) {
-        long jodelId = jodel.getId();
+    public int getSumVoteFromJodel(long jodelId) {
         return rep.sumDirectionByJodelId(jodelId);
     }
 

@@ -3,6 +3,8 @@ package com.example.jodel.vote.model;
 import com.example.jodel.comment.model.Comment;
 import com.example.jodel.jodel.model.Jodel;
 import com.example.jodel.user.model.UserAccount;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 
@@ -19,6 +21,7 @@ public class Vote {
 
     @ManyToOne
     @JoinColumn(name = "f_jodel")
+    @JsonManagedReference
     Jodel jodel;
 
     @ManyToOne
