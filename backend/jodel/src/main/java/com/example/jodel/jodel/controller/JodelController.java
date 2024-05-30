@@ -1,5 +1,7 @@
 package com.example.jodel.jodel.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
@@ -27,9 +29,13 @@ public class JodelController {
         return ResponseEntity.ok(jodelService.setJodel(jodelRequest.getText(), jodelRequest.getF_user()));
     }
 
-    @GetMapping("jodel/{id}")
-    public Jodel requestMethodName(@PathVariable long id) {
+    @GetMapping("/jodel/{id}")
+    public Jodel getJodelById(@PathVariable long id) {
         return jodelService.getJodelById(id).orElseThrow();
     }
 
+    @GetMapping("/jodel")
+    public List<Jodel> getAllJodel() {
+        return jodelService.getAllJodel();
+    }
 }

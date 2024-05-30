@@ -1,13 +1,16 @@
 package com.example.jodel.vote.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.jodel.exception.JodelException;
 import com.example.jodel.vote.model.Vote;
+import com.example.jodel.vote.model.VoteType;
 import com.example.jodel.vote.service.VoteService;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +28,8 @@ public class VoteController {
     public ResponseEntity<?> setVote(
             @RequestBody VoteRequest voteRequest) {
         try {
-            Vote vote = voteService.setVote(0, voteRequest.getF_jodel(), voteRequest.getF_user(),
-                    voteRequest.getDirection());
+            Vote vote = voteService.setVote(voteRequest.getF_entity(), voteRequest.getF_user(),
+                    voteRequest.getDirection(), voteRequest.getVoteType());
             return ResponseEntity.ok(vote);
         } catch (JodelException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -34,9 +37,23 @@ public class VoteController {
 
     }
 
-    @GetMapping("vote/getsum/{id}")
-    public int getSum(@PathVariable long id) {
-        return voteService.getSumVoteFromJodel(id);
+    @GetMapping("/vote/getsum/{id}")
+    public int getSum(@PathVariable long id, @RequestParam String voteType) {
+        VoteType type = validateVoteType(voteType);
+        if (type == VoteType.jodel) {
+            return voteService.getSumVoteFromJodel(id);
+        } else if (type == VoteType.comment) {
+            return voteService.getSumVoteFromComment(id);
+        }
+        throw new RuntimeException("Unexpected error occurred");
+    }
+
+    private VoteType validateVoteType(String voteType) {
+        try {
+            return VoteType.valueOf(voteType.toLowerCase());
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("VoteType " + voteType + " ist nicht verfügbar");
+        }
     }
 
 }

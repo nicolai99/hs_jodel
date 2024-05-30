@@ -9,6 +9,7 @@ import com.example.jodel.vote.service.VoteService;
 import com.example.jodel.exception.JodelException;
 import com.example.jodel.jodel.service.JodelService;
 import com.example.jodel.vote.model.Vote;
+import com.example.jodel.vote.model.VoteType;
 
 @ActiveProfiles("dev")
 @SpringBootTest
@@ -29,17 +30,19 @@ class JodelApplicationTests {
 	void testVote() {
 
 		try {
-			Vote vote1 = vote.setVote(0, 1, "UserId1", 1);
+			VoteType voteType = VoteType.jodel;
+			Vote vote1 = vote.setVote(1, "UserId1", 1, voteType);
 			System.out.println(vote1.toString());
-			Vote vote2 = vote.setVote(0, 1, "UserId1", 1);
+			Vote vote2 = vote.setVote(1, "UserId1", 1, voteType);
 		} catch (JodelException e) {
 			System.out.println(e.getMessage());
 
 		}
 
 		try {
-			Vote vote3 = vote.setVote(0, 1, "UserId1", -1);
-			Vote vote4 = vote.setVote(0, 1, "UserId2", 1);
+			VoteType voteType = VoteType.jodel;
+			Vote vote3 = vote.setVote(1, "UserId1", 1, voteType);
+			Vote vote4 = vote.setVote(1, "UserId2", 1, voteType);
 			System.out.println(vote3.toString());
 			System.out.println(vote4.toString());
 		} catch (JodelException e) {

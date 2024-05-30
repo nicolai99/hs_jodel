@@ -3,6 +3,7 @@ package com.example.jodel.jodel.service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,10 @@ public class JodelService {
 
     public Optional<Jodel> getJodelById(long id) {
         return rep.findById(id);
+    }
+
+    public List<Jodel> getAllJodel(){
+        return rep.findAll();
     }
 
     public Jodel setJodel(String text, String f_user) {

@@ -23,7 +23,7 @@ public class CommentService {
     @Autowired
     UserAccountService userAccountService;
 
-    Optional<Comment> getCommentById(long id) {
+    public Optional<Comment> getCommentById(long id) {
         return rep.findById(id);
     }
 

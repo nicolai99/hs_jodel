@@ -1,5 +1,7 @@
 package com.example.jodel.vote.controller;
 
+import com.example.jodel.vote.model.VoteType;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,9 +9,9 @@ import lombok.Setter;
 @Setter
 public class VoteRequest {
 
-    private long f_comment;
+    private long f_entity;
     private String f_user;
-    private long f_jodel;
     private int direction;
+    private VoteType voteType;
 
 }
