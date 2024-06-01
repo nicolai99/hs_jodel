@@ -104,6 +104,8 @@ const posts = [
 
 function App() {
   const [filter, setFilter] = useState("Neueste");
+  const [isCreatingPost, setIsCreatingPost] = useState(false);
+  const [newPostText, setNewPostText] = useState('');
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
@@ -113,30 +115,66 @@ function App() {
     apiService.getAllJodel();
   };
 
+  const handleNewPostButtonClick = () => {
+    setIsCreatingPost(true);
+  };
+
+  const handlePostCancel = () => {
+    setIsCreatingPost(false);
+    setNewPostText('');
+  };
+
+  const handlePostSubmit = () => {
+    setIsCreatingPost(false);
+    setNewPostText('');
+  };
+
+
   return (
     <div className="container">
+
       <header className="header">
         <h1>Jodel</h1>
         <div className="header-right">
-          <button className="new-post-button" onClick={getAllJodel}>
-            +
-          </button>
+          {!isCreatingPost && (
+            <button className="new-post-button" onClick={handleNewPostButtonClick}>+</button>
+          )}
+          <button onClick={getAllJodel}>TestAPI</button>
         </div>
       </header>
 
-      <div className="filter">
-        <select value={filter} onChange={handleFilterChange}>
-          <option value="Neueste">Neueste</option>
-          <option value="Beliebteste">Beliebteste</option>
-          <option value="Kommentare">Kommentare</option>
-        </select>
-      </div>
+      {isCreatingPost && (
+        <div className="new-post-form">
+          <textarea
+            value={newPostText}
+            onChange={(e) => setNewPostText(e.target.value)}
+            placeholder="Schreibe deinen Yodel-Text...">
+          </textarea>
+          <div className="new-post-buttons">
+            <button onClick={handlePostCancel}>Cancel</button>
+            <button onClick={handlePostSubmit}>Post</button>
+          </div>
+        </div>
+      )}
 
-      <div className="posts">
-        {posts.map((post) => (
-          <Post key={post.id} post={post} />
-        ))}
-      </div>
+      {!isCreatingPost && (
+        <div className="filter">
+          <select value={filter} onChange={handleFilterChange}>
+            <option value="Neueste">Neueste</option>
+            <option value="Beliebteste">Beliebteste</option>
+            <option value="Kommentare">Kommentare</option>
+          </select>
+        </div>
+      )}
+
+      {!isCreatingPost && (
+        <div className="posts">
+          {posts.map(post => (
+            <Post key={post.id} post={post} />
+          ))}
+        </div>
+      )}
+
     </div>
   );
 }
