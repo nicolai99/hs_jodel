@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Post from "./Post";
+import Jodel from './Jodel';
 import apiService from "./services/Api";
 
 const posts = [
@@ -105,15 +106,33 @@ const posts = [
 function App() {
   const [filter, setFilter] = useState("Neueste");
   const [isCreatingPost, setIsCreatingPost] = useState(false);
-  const [newPostText, setNewPostText] = useState('');
+  const [newJodelText, setNewJodelText] = useState('');
+  const [jodels, setJodels] = useState([]);
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
   };
 
   const getAllJodel = async () => {
-    apiService.getAllJodel();
+    console.log("eins")
+    try {
+      console.log("zwei")
+      const response = await apiService.getAllJodel();
+      setJodels(response);
+      console.log("drei")
+    } catch (error) {
+      console.error("getJodel-error: ", error);
+    }
   };
+
+  useEffect(() => {
+    getAllJodel();
+  }, []);
+
+
+  // const getVote = async () => {
+  //   apiService.getJodelVote(1, "jodel");
+  // }
 
   const handleNewPostButtonClick = () => {
     setIsCreatingPost(true);
@@ -121,12 +140,15 @@ function App() {
 
   const handlePostCancel = () => {
     setIsCreatingPost(false);
-    setNewPostText('');
+    setNewJodelText('');
   };
 
-  const handlePostSubmit = () => {
+  const postNewJodel = async () => {
+    const newJodel = await apiService.setJodel(newJodelText);
+    setJodels([...jodels, newJodel]);
     setIsCreatingPost(false);
-    setNewPostText('');
+    // apiService.setJodel(newJodelText);
+    setNewJodelText('');
   };
 
 
@@ -146,13 +168,13 @@ function App() {
       {isCreatingPost && (
         <div className="new-post-form">
           <textarea
-            value={newPostText}
-            onChange={(e) => setNewPostText(e.target.value)}
-            placeholder="Schreibe deinen Yodel-Text...">
+            value={newJodelText}
+            onChange={(e) => setNewJodelText(e.target.value)}
+            placeholder="Schreibe deinen Jodel...">
           </textarea>
           <div className="new-post-buttons">
             <button onClick={handlePostCancel}>Cancel</button>
-            <button onClick={handlePostSubmit}>Post</button>
+            <button onClick={postNewJodel}>Post</button>
           </div>
         </div>
       )}
@@ -167,10 +189,18 @@ function App() {
         </div>
       )}
 
-      {!isCreatingPost && (
+      {/* {!isCreatingPost && (
         <div className="posts">
           {posts.map(post => (
             <Post key={post.id} post={post} />
+          ))}
+        </div>
+      )} */}
+
+      {!isCreatingPost && (
+        <div className="posts">
+          {jodels.map(post => (
+            <Jodel jodel={post}/>
           ))}
         </div>
       )}
