@@ -50,7 +50,7 @@ public class VoteService {
     }
 
     public Vote writeExistingOrNew(Optional<Vote> existingVoteOpt, int direction, UserAccount user, Jodel jodel,
-            Comment comment, VoteType voteType) throws JodelException {
+            Comment comment, VoteType voteType) throws VoteIsAlreadySet {
         Vote vote;
 
         if (existingVoteOpt.isPresent()) {
@@ -61,7 +61,7 @@ public class VoteService {
                 vote.setDirection(direction);
             } else {
                 // Wenn die Direction gleich ist
-                throw new JodelException();
+                throw new VoteIsAlreadySet();
             }
         } else {
             // Wenn kein Vote existiert, erstellen Sie einen neuen
@@ -79,7 +79,7 @@ public class VoteService {
         return rep.save(vote);
     }
 
-    public Vote setVote(long entityId, String userId, int direction, VoteType voteType) throws JodelException {
+    public Vote setVote(long entityId, String userId, int direction, VoteType voteType) throws VoteIsAlreadySet {
         UserAccount user = userAccountService.getUserAccountByID(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 

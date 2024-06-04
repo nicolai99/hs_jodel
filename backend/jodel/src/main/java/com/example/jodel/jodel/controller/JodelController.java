@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.jodel.jodel.model.Jodel;
 import com.example.jodel.jodel.service.JodelService;
+import com.example.jodel.jodel.service.JodelWithDistanceDto;
 
 @RequestMapping("/jodel/api")
 @RestController
@@ -26,7 +28,8 @@ public class JodelController {
     @PostMapping("/jodel/setjodel")
     public ResponseEntity<Jodel> setBooking(
             @RequestBody JodelRequest jodelRequest) {
-        return ResponseEntity.ok(jodelService.setJodel(jodelRequest.getText(), jodelRequest.getF_user()));
+        return ResponseEntity.ok(jodelService.setJodel(jodelRequest.getText(), jodelRequest.getF_user(),
+                jodelRequest.getLatitude(), jodelRequest.getLongitude()));
     }
 
     @GetMapping("/jodel/{id}")
@@ -37,5 +40,10 @@ public class JodelController {
     @GetMapping("/jodel")
     public List<Jodel> getAllJodel() {
         return jodelService.getAllJodel();
+    }
+
+    @GetMapping("/jodelwithdistance")
+    public List<JodelWithDistanceDto> getAllJodelWithDistance(@RequestParam double lat, @RequestParam double lon) {
+        return jodelService.getAllJodelWithDistance(lat, lon);
     }
 }

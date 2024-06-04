@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.jodel.exception.JodelException;
+import com.example.jodel.exception.VoteIsAlreadySet;
 import com.example.jodel.vote.model.Vote;
 import com.example.jodel.vote.model.VoteType;
 import com.example.jodel.vote.service.VoteService;
@@ -31,7 +31,7 @@ public class VoteController {
             Vote vote = voteService.setVote(voteRequest.getF_entity(), voteRequest.getF_user(),
                     voteRequest.getDirection(), voteRequest.getVoteType());
             return ResponseEntity.ok(vote);
-        } catch (JodelException e) {
+        } catch (VoteIsAlreadySet e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
 

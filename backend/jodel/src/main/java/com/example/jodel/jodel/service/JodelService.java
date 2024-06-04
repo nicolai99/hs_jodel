@@ -2,13 +2,14 @@ package com.example.jodel.jodel.service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-
+import java.util.stream.Collectors;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.jodel.jodel.repository.JodelRepository;
 import com.example.jodel.user.service.UserAccountService;
+import com.example.jodel.city.model.City;
 import com.example.jodel.city.service.CityService;
 import com.example.jodel.jodel.model.*;
 
@@ -25,14 +26,31 @@ public class JodelService {
         return rep.findById(id);
     }
 
-    public List<Jodel> getAllJodel(){
+    public List<Jodel> getAllJodel() {
+
         return rep.findAll();
     }
 
-    public Jodel setJodel(String text, String f_user) {
+    public List<JodelWithDistanceDto> getAllJodelWithDistance(double lat, double lon) {
+        List<Jodel> jodels = rep.findAll();
+
+        List<JodelWithDistanceDto> jodelsWithDistance = jodels.stream()
+                .map(jodel -> {
+                    double distance = cityService.getDistance(lat, lon, jodel.getCity());
+                    JodelWithDistanceDto dto = new JodelWithDistanceDto();
+                    dto.setJodel(jodel);
+                    dto.setDistance(distance);
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        return jodelsWithDistance;
+    }
+
+    public Jodel setJodel(String text, String f_user, double lat, double lon) {
         Jodel jodel = new Jodel();
-        jodel.setF_city(cityService.getCityById(1).orElseThrow());
-        jodel.setF_user(userAccountService.getUserAccountByID(f_user).orElseThrow());
+        jodel.setCity(cityService.setCity(lat, lon));
+        jodel.setUser(userAccountService.getUserAccountByID(f_user).orElseThrow());
         jodel.setText(text);
         LocalDateTime now = LocalDateTime.now();
         jodel.setTimestemp(now);

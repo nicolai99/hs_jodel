@@ -1,5 +1,8 @@
 /*City*/
-INSERT into city  (id,name,longitude,latitude) values (1,'Esslingen',48.738406,9.30811);
+INSERT into city  (id,name,latitude,longitude) values (1,'Esslingen',48.738406,9.30811);
+INSERT into city  (id,name,latitude,longitude) values (2,'Marbach',48.9396,9.2646);
+ALTER TABLE city ALTER COLUMN id RESTART WITH 3;
+
 
 /*User*/
 INSERT into user_account (id,name) values ('UserId1','nicolai');

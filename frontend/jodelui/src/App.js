@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import Post from "./Post";
-import Jodel from './Jodel';
+import Jodel from "./Jodel";
 import apiService from "./services/Api";
 
 const posts = [
@@ -106,20 +106,20 @@ const posts = [
 function App() {
   const [filter, setFilter] = useState("Neueste");
   const [isCreatingPost, setIsCreatingPost] = useState(false);
-  const [newJodelText, setNewJodelText] = useState('');
+  const [newJodelText, setNewJodelText] = useState("");
   const [jodels, setJodels] = useState([]);
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
   };
-
+  const getLocation = async () => {
+    const location = await apiService.getCurrentLocation();
+    alert(String(location.lat) + " " + String(location.lon));
+  };
   const getAllJodel = async () => {
-    console.log("eins")
     try {
-      console.log("zwei")
       const response = await apiService.getAllJodel();
       setJodels(response);
-      console.log("drei")
     } catch (error) {
       console.error("getJodel-error: ", error);
     }
@@ -128,7 +128,6 @@ function App() {
   useEffect(() => {
     getAllJodel();
   }, []);
-
 
   // const getVote = async () => {
   //   apiService.getJodelVote(1, "jodel");
@@ -140,28 +139,36 @@ function App() {
 
   const handlePostCancel = () => {
     setIsCreatingPost(false);
-    setNewJodelText('');
+    setNewJodelText("");
   };
 
   const postNewJodel = async () => {
-    const newJodel = await apiService.setJodel(newJodelText);
+    const location = await apiService.getCurrentLocation();
+    const newJodel = await apiService.setJodel(
+      newJodelText,
+      location.lat,
+      location.lon
+    );
     setJodels([...jodels, newJodel]);
     setIsCreatingPost(false);
     // apiService.setJodel(newJodelText);
-    setNewJodelText('');
+    setNewJodelText("");
   };
-
 
   return (
     <div className="container">
-
       <header className="header">
         <h1>Jodel</h1>
         <div className="header-right">
           {!isCreatingPost && (
-            <button className="new-post-button" onClick={handleNewPostButtonClick}>+</button>
+            <button
+              className="new-post-button"
+              onClick={handleNewPostButtonClick}
+            >
+              +
+            </button>
           )}
-          <button onClick={getAllJodel}>TestAPI</button>
+          <button onClick={getLocation}>TestAPI</button>
         </div>
       </header>
 
@@ -170,8 +177,8 @@ function App() {
           <textarea
             value={newJodelText}
             onChange={(e) => setNewJodelText(e.target.value)}
-            placeholder="Schreibe deinen Jodel...">
-          </textarea>
+            placeholder="Schreibe deinen Jodel..."
+          ></textarea>
           <div className="new-post-buttons">
             <button onClick={handlePostCancel}>Cancel</button>
             <button onClick={postNewJodel}>Post</button>
@@ -199,12 +206,11 @@ function App() {
 
       {!isCreatingPost && (
         <div className="posts">
-          {jodels.map(post => (
-            <Jodel jodel={post}/>
+          {jodels.map((post) => (
+            <Jodel jodel={post} />
           ))}
         </div>
       )}
-
     </div>
   );
 }

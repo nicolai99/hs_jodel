@@ -1,13 +1,16 @@
 package com.example.jodel.jodel.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.example.jodel.city.model.*;
 import com.example.jodel.user.model.*;
 
+@Getter
+@Setter
 @Entity
 public class Jodel {
 
@@ -25,33 +28,4 @@ public class Jodel {
 
     String text;
     LocalDateTime timestemp;
-
-    public long getId() {
-        return id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public LocalDateTime getTimestemp() {
-        return timestemp;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public void setTimestemp(LocalDateTime timestemp) {
-        this.timestemp = timestemp;
-    }
-
-    public void setF_city(City city) {
-        this.city = city;
-    }
-
-    public void setF_user(UserAccount user) {
-        this.user = user;
-    }
-
 }

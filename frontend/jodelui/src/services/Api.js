@@ -13,12 +13,12 @@ const host = "http://localhost:8080/jodel/api";
 // }
 
 async function apiRequest(endpoint, options = {}) {
-  const { method = 'GET', body } = options;
+  const { method = "GET", body } = options;
 
   const requestOptions = {
     method,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
   };
@@ -36,25 +36,46 @@ async function getAllJodel() {
 
 // type: jodel oder comment
 async function getJodelVote(id, type) {
-  return apiRequest(`/vote/getsum/${id}?voteType=${type}`)
+  return apiRequest(`/vote/getsum/${id}?voteType=${type}`);
 }
 
 // "/api/vote/setvote"
 
-async function setJodel(text) {
-  return apiRequest("/jodel/setjodel", { 
+async function setJodel(text, latitude, longitude) {
+  return apiRequest("/jodel/setjodel", {
     method: "POST",
     body: {
-        "text":text,
-        "f_user":"UserId1"
+      text: text,
+      f_user: "UserId1",
+      latitude: latitude,
+      longitude: longitude,
     },
-  })
-};
+  });
+}
 
+function getCurrentLocation() {
+  return new Promise((resolve, reject) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          resolve({ lat, lon });
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    } else {
+      reject(new Error("Geolocation is not supported by this browser."));
+    }
+  });
+}
 
 const apiService = {
   getAllJodel,
   getJodelVote,
-  setJodel
+  setJodel,
+  getCurrentLocation,
 };
 export default apiService;

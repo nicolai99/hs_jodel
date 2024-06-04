@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.jodel.city.model.City;
 import com.example.jodel.city.repository.CityRepository;
+import com.example.jodel.exception.RecordNotFound;
 
 @Service
 public class CityService {
@@ -18,4 +19,26 @@ public class CityService {
         return rep.findById(id);
     }
 
+    public double getDistance(double lat, double lon, City city) {
+        return rep.getDistanceToCity(lat, lon, city.getId());
+    }
+
+    public City findByLatAndLon(double lat, double lon) throws RecordNotFound {
+        return rep.findByLatitudeAndLongitude(lat, lon).orElseThrow(() -> new RecordNotFound("City"));
+    }
+
+    public City setCity(double lat, double lon) {
+        try {
+            return findByLatAndLon(lat, lon);
+        } catch (RecordNotFound e) {
+            City city = new City();
+            Location name = new Location();
+            city.setName(name.getLocation(lat, lon));
+            city.setLatitude(lat);
+            city.setLongitude(lon);
+            return rep.save(city);
+
+        }
+
+    }
 }

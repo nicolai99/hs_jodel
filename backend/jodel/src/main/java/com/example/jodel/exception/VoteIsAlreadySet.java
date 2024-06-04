@@ -1,10 +1,7 @@
 package com.example.jodel.exception;
 
-public class JodelException extends Exception {
-
-    public JodelException() {
+public class VoteIsAlreadySet extends Exception {
+    public VoteIsAlreadySet() {
         super("Ein Vote dieser Art ist bereits vorhanden!");
-
     }
-
 }
