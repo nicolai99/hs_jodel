@@ -1,217 +1,51 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, Link, NavLink } from "react-router-dom";
 import "./App.css";
-import Post from "./Post";
-import Jodel from "./Jodel";
+// import Jodel from "./Jodel";
 import apiService from "./services/Api";
+import JodelPage from './Pages/JodelPage';
+import AccountPage from './Pages/AccountPage';
+import CommentPage from "./Pages/CommentPage";
 
-const posts = [
-  {
-    id: 1,
-    username: "Nicolai",
-    text: "Ich: Sollen wir uns das letzte Stück Pizza teilen?\nSie: Nee, das schaffe ich alleine!",
-    time: "nah - 5min",
-    karma: 85,
-    color: "#82B1FF",
-  },
-  {
-    id: 2,
-    username: "Linus",
-    text: "Ich: Sollen wir uns das letzte Stück Pizza teilen?\nSie: Nee, das schaffe ich alleine!",
-    time: "nah - 9min",
-    karma: 85,
-    color: "#CE93D8",
-  },
-  {
-    id: 3,
-    username: "usrname",
-    text: "Ich: Sollen wir uns das letzte Stück Pizza teilen?\nSie: Nee, das schaffe ich alleine!",
-    time: "nah - 9min",
-    karma: 85,
-    color: "#FF8A80",
-  },
-  {
-    id: 4,
-    username: "Nicolai",
-    text: "Ich: Sollen wir uns das letzte Stück Pizza teilen?\nSie: Nee, das schaffe ich alleine!",
-    time: "nah - 5min",
-    karma: 85,
-    color: "#82B1FF",
-  },
-  {
-    id: 5,
-    username: "Linus",
-    text: "Ich: Sollen wir uns das letzte Stück Pizza teilen?\nSie: Nee, das schaffe ich alleine!",
-    time: "nah - 9min",
-    karma: 85,
-    color: "#CE93D8",
-  },
-  {
-    id: 6,
-    username: "usrname",
-    text: "Ich: Sollen wir uns das letzte Stück Pizza teilen?\nSie: Nee, das schaffe ich alleine!",
-    time: "nah - 9min",
-    karma: 85,
-    color: "#FF8A80",
-  },
-  {
-    id: 7,
-    username: "Nicolai",
-    text: "Ich: Sollen wir uns das letzte Stück Pizza teilen?\nSie: Nee, das schaffe ich alleine!",
-    time: "nah - 5min",
-    karma: 85,
-    color: "#82B1FF",
-  },
-  {
-    id: 8,
-    username: "Linus",
-    text: "Ich: Sollen wir uns das letzte Stück Pizza teilen?\nSie: Nee, das schaffe ich alleine!",
-    time: "nah - 9min",
-    karma: 85,
-    color: "#CE93D8",
-  },
-  {
-    id: 9,
-    username: "usrname",
-    text: "Ich: Sollen wir uns das letzte Stück Pizza teilen?\nSie: Nee, das schaffe ich alleine!",
-    time: "nah - 9min",
-    karma: 85,
-    color: "#FF8A80",
-  },
-  {
-    id: 10,
-    username: "Nicolai",
-    text: "Ich: Sollen wir uns das letzte Stück Pizza teilen?\nSie: Nee, das schaffe ich alleine!",
-    time: "nah - 5min",
-    karma: 85,
-    color: "#82B1FF",
-  },
-  {
-    id: 11,
-    username: "Linus",
-    text: "Ich: Sollen wir uns das letzte Stück Pizza teilen?\nSie: Nee, das schaffe ich alleine!",
-    time: "nah - 9min",
-    karma: 85,
-    color: "#CE93D8",
-  },
-  {
-    id: 12,
-    username: "usrname",
-    text: "Ich: Sollen wir uns das letzte Stück Pizza teilen?\nSie: Nee, das schaffe ich alleine!",
-    time: "nah - 9min",
-    karma: 85,
-    color: "#FF8A80",
-  },
-];
+
 
 function App() {
-  const [filter, setFilter] = useState("Neueste");
-  const [isCreatingPost, setIsCreatingPost] = useState(false);
-  const [newJodelText, setNewJodelText] = useState("");
-  const [jodels, setJodels] = useState([]);
-
-  const handleFilterChange = (event) => {
-    setFilter(event.target.value);
-  };
+  
   const getLocation = async () => {
     const location = await apiService.getCurrentLocation();
     alert(String(location.lat) + " " + String(location.lon));
   };
-  const getAllJodel = async () => {
-    try {
-      const response = await apiService.getAllJodel();
-      setJodels(response);
-    } catch (error) {
-      console.error("getJodel-error: ", error);
-    }
-  };
-
-  useEffect(() => {
-    getAllJodel();
-  }, []);
-
-  // const getVote = async () => {
-  //   apiService.getJodelVote(1, "jodel");
-  // }
-
-  const handleNewPostButtonClick = () => {
-    setIsCreatingPost(true);
-  };
-
-  const handlePostCancel = () => {
-    setIsCreatingPost(false);
-    setNewJodelText("");
-  };
-
-  const postNewJodel = async () => {
-    const location = await apiService.getCurrentLocation();
-    const newJodel = await apiService.setJodel(
-      newJodelText,
-      location.lat,
-      location.lon
-    );
-    setJodels([...jodels, newJodel]);
-    setIsCreatingPost(false);
-    // apiService.setJodel(newJodelText);
-    setNewJodelText("");
-  };
-
+  
   return (
-    <div className="container">
-      <header className="header">
-        <h1>Jodel</h1>
-        <div className="header-right">
-          {!isCreatingPost && (
-            <button
-              className="new-post-button"
-              onClick={handleNewPostButtonClick}
-            >
-              +
-            </button>
-          )}
-          <button onClick={getLocation}>TestAPI</button>
-        </div>
-      </header>
-
-      {isCreatingPost && (
-        <div className="new-post-form">
-          <textarea
-            value={newJodelText}
-            onChange={(e) => setNewJodelText(e.target.value)}
-            placeholder="Schreibe deinen Jodel..."
-          ></textarea>
-          <div className="new-post-buttons">
-            <button onClick={handlePostCancel}>Cancel</button>
-            <button onClick={postNewJodel}>Post</button>
+    <Router>
+      <div className="container">
+        <header className="header">
+          <h1>Jodel</h1>
+          <div className="header-right">
+            <button onClick={getLocation}>TestAPI</button>
           </div>
-        </div>
-      )}
+        </header>
 
-      {!isCreatingPost && (
-        <div className="filter">
-          <select value={filter} onChange={handleFilterChange}>
-            <option value="Neueste">Neueste</option>
-            <option value="Beliebteste">Beliebteste</option>
-            <option value="Kommentare">Kommentare</option>
-          </select>
-        </div>
-      )}
+        <nav className="tab-bar">
+          <NavLink to="/" end>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FF8D00"><path d="M280-240q-17 0-28.5-11.5T240-280v-80h520v-360h80q17 0 28.5 11.5T880-680v600L720-240H280ZM80-280v-560q0-17 11.5-28.5T120-880h520q17 0 28.5 11.5T680-840v360q0 17-11.5 28.5T640-440H240L80-280Zm520-240v-280H160v280h440Zm-440 0v-280 280Z"/></svg>
+            <span>Jodel</span>
+          </NavLink>
+          <NavLink to="/account">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FF8D00"><path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z"/></svg>
+            <span>Account</span>
+          </NavLink>
+        </nav>
 
-      {/* {!isCreatingPost && (
-        <div className="posts">
-          {posts.map(post => (
-            <Post key={post.id} post={post} />
-          ))}
-        </div>
-      )} */}
+        <Routes>
+          <Route path="/" element={<JodelPage/>}/>
+          <Route path="/account" element={<AccountPage/>}/>
+          <Route path="/comment" element={<CommentPage/>} />
+        </Routes>
 
-      {!isCreatingPost && (
-        <div className="posts">
-          {jodels.map((post) => (
-            <Jodel jodel={post} />
-          ))}
-        </div>
-      )}
-    </div>
+      </div>
+
+    </Router>
   );
 }
 
