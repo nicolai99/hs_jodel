@@ -31,12 +31,15 @@ public class Location {
 
             Map<String, Object> map = mapper.readValue(rd, Map.class);
             Map<String, Object> address = (Map<String, Object>) map.get("address");
-            String village = (String) address.get("village");
-            System.out.println(village);
+            String city = (String) address.get("village");
+            if (city == null) {
+                city = (String) address.get("town");
+            }
+            System.out.println(city);
 
             rd.close();
             is.close();
-            return village;
+            return city;
         } catch (Exception e) {
             return "Error in get Location";
         }

@@ -28,6 +28,9 @@ public class CityService {
     }
 
     public City setCity(double lat, double lon) {
+
+        // HIER NOCH lat, lon nach 2 Nochkommastellen cuten, damit nicht so viele Städte
+        // drin sind.
         try {
             return findByLatAndLon(lat, lon);
         } catch (RecordNotFound e) {
