@@ -1,0 +1,57 @@
+version: "3.7"
+services:
+  spring:
+    build:
+      context: ./backend/jodel
+      dockerfile: Dockerfile
+    container_name: spring
+    volumes:
+      - "./backend/jodel/src:/build/src"
+      - "./backend/jodel/target:/build/target:cached"
+    # develop:
+    #   watch:
+    #     - path: ./backend/jodel
+    #       target: /src
+    #       action: sync+restart
+
+    ports:
+      - "8082:8082"
+    environment:
+      - POSTGRES_USER=jodel
+      - POSTGRES_PASSWORD=jodel
+      - POSTGRES_DB=jodel
+    command: "mvn spring-boot:run"      
+    depends_on:
+      - spring-db 
+    networks:
+      - local
+  
+  spring-db:
+    container_name: spring-db
+    image: "postgres:12"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=jodel
+      - POSTGRES_PASSWORD=jodel
+      - POSTGRES_DB=jodel
+    networks:
+      - local
+  web:
+    build: 
+      context: ./frontend/jodelui
+    develop:
+      watch:
+        - path: ./frontend/jodelui
+          target: /app
+          action: sync
+    command: "npm start" 
+    ports:
+      - 3000:3000
+    networks:
+      - local
+
+networks:
+  local:
+
+

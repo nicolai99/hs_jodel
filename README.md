@@ -31,6 +31,11 @@ Link zum Prototyp der App (mit Figma):
 im Verzeichnis /backend/jodel \
 mvn spring-boot:run -Dspring-boot.run.profiles=dev
 
+## Starten im Docker
+
+docker-compose build
+docker-compose up
+
 ## Openstreet API
 
 https://nominatim.openstreetmap.org/reverse?lat=48.738406&lon=9.30811

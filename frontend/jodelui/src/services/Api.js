@@ -1,4 +1,4 @@
-const host = "http://localhost:8080/jodel/api";
+const host = "http://localhost:8082/jodel/api";
 
 // async function apiRequest(endpoint, options = {}) {
 

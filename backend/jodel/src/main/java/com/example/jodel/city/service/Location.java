@@ -19,6 +19,8 @@ public class Location {
 
     public String getLocation(double lat, double lon) {
         try {
+            lat = Math.floor(lat * 100) / 100;
+            lon = Math.floor(lon * 100) / 100;
             String uriString = "https://nominatim.openstreetmap.org/reverse?lat=" + lat + "&lon=" + lon
                     + "&format=json";
             System.out.println(uriString);
