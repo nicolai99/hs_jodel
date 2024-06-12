@@ -20,7 +20,7 @@ public interface VoteRepository extends JpaRepository<Vote, Long>
     Optional<Vote> findByCommentAndUser(Comment comment, UserAccount user);
 
     @Query(value = "SELECT SUM(v.direction) FROM Vote v WHERE v.f_jodel = ?1", nativeQuery = true)
-    int sumDirectionByJodelId(Long jodelId);
+    Integer sumDirectionByJodelId(Long jodelId);
 
     @Query(value = "SELECT SUM(v.direction) FROM Vote v WHERE v.f_comment = ?1", nativeQuery = true)
     int sumDirectionByCommentId(Long commentId);

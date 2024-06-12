@@ -46,9 +46,9 @@ const JodelPage = () => {
     const postNewJodel = async () => {
         const location = await apiService.getCurrentLocation();
         const newJodel = await apiService.setJodel(
-        newJodelText,
-        location.lat,
-        location.lon
+            newJodelText,
+            location.lat,
+            location.lon
         );
         setJodels([...jodels, newJodel]);
         setIsCreatingPost(false);

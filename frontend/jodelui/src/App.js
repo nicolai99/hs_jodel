@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Routes, Link, NavLink } from "react-router-dom";
 import "./App.css";
 // import Jodel from "./Jodel";
@@ -15,7 +16,7 @@ function App() {
     const location = await apiService.getCurrentLocation();
     alert(String(location.lat) + " " + String(location.lon));
   };
-  
+
   return (
     <Router>
       <div className="container">
@@ -40,7 +41,7 @@ function App() {
         <Routes>
           <Route path="/" element={<JodelPage/>}/>
           <Route path="/account" element={<AccountPage/>}/>
-          <Route path="/comment" element={<CommentPage/>} />
+          <Route path="/jodel/:id" element={<CommentPage/>} />
         </Routes>
 
       </div>

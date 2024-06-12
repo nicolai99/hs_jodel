@@ -25,6 +25,9 @@ async function apiRequest(endpoint, options = {}) {
 
   console.log(host + endpoint);
   const request = await fetch(host + endpoint, requestOptions);
+  if(!request.ok){
+    throw Error;
+  }
   const data = await request.json();
   // alert(JSON.stringify(data));
   return data;
@@ -40,6 +43,18 @@ async function getJodelVote(id, type) {
 }
 
 // "/api/vote/setvote"
+// http://localhost:8082/jodel/api/vote/setvote
+function setVote(postID, direction, userID, type) {
+  return apiRequest('/vote/setvote', {
+    method: 'POST',
+    body: {
+      f_entity: postID,
+      direction: direction,
+      f_user: userID,
+      voteType: type,
+    }
+  });
+}
 
 async function setJodel(text, latitude, longitude) {
   return apiRequest("/jodel/setjodel", {
@@ -72,10 +87,13 @@ function getCurrentLocation() {
   });
 }
 
+
+
 const apiService = {
   getAllJodel,
   getJodelVote,
   setJodel,
   getCurrentLocation,
+  setVote,
 };
 export default apiService;
