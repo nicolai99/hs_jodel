@@ -39,3 +39,9 @@ docker-compose up
 ## Openstreet API
 
 https://nominatim.openstreetmap.org/reverse?lat=48.738406&lon=9.30811
+
+# Keycloak
+
+## Export erstellen
+
+docker exec -it keycloak /opt/keycloak/bin/kc.sh export --optimized --dir=/opt/keycloak/data/import --realm jodel

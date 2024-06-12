@@ -1,0 +1,48 @@
+{
+  "realm" : "jodel",
+  "users" : [ {
+    "id" : "6b6dc989-8ade-493a-a459-eddc42fd4671",
+    "createdTimestamp" : 1718178277921,
+    "username" : "linus",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "",
+    "lastName" : "",
+    "credentials" : [ {
+      "id" : "4f0675ae-2c5f-450d-931b-d898d01a1d1e",
+      "type" : "password",
+      "userLabel" : "My password",
+      "createdDate" : 1718178300244,
+      "secretData" : "{\"value\":\"Glnk+LppCNDGn0kobpvGGriyRJ8ym6ePStbTImo+qKs=\",\"salt\":\"A7Uig2IJogN/Pp+ZJlPplQ==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [],
+    "realmRoles" : [ "default-roles-jodel" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "60a6cae6-5fb4-4d50-9d16-ced3b3cc82cf",
+    "createdTimestamp" : 1718178244504,
+    "username" : "nicolai",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "",
+    "lastName" : "",
+    "credentials" : [ {
+      "id" : "16342a7c-f401-4d6b-8bef-ee30eabceab2",
+      "type" : "password",
+      "userLabel" : "My password",
+      "createdDate" : 1718178258881,
+      "secretData" : "{\"value\":\"6+um/XDy/k3Zj2AO/Pmk8hTa+ahGyG/o2Hv01hHPCng=\",\"salt\":\"cVRFWptpz31xnOBBmO6MfA==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [],
+    "realmRoles" : [ "default-roles-jodel" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ]
+}
