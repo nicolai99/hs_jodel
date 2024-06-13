@@ -15,9 +15,19 @@ values (2, 'Marbach', 48.9396, 9.2646);
 ALTER SEQUENCE city_id_seq RESTART WITH 3;
 
 /*User*/
-INSERT into user_account (id, name) values ('UserId1', 'nicolai');
+INSERT into
+    user_account (id, name)
+values (
+        '60a6cae6-5fb4-4d50-9d16-ced3b3cc82cf',
+        'nicolai'
+    );
 
-INSERT into user_account (id, name) values ('UserId2', 'linus');
+INSERT into
+    user_account (id, name)
+values (
+        '6b6dc989-8ade-493a-a459-eddc42fd4671',
+        'linus'
+    );
 
 /*Jodel*/
 INSERT into
@@ -31,7 +41,7 @@ INSERT into
 values (
         1,
         1,
-        'UserId1',
+        '60a6cae6-5fb4-4d50-9d16-ced3b3cc82cf',
         'Das ist das erste Jodel von nicolai, cool oder?',
         '2024-05-23 15:30:45'
     );
@@ -47,7 +57,7 @@ INSERT into
 values (
         2,
         1,
-        'UserId2',
+        '6b6dc989-8ade-493a-a459-eddc42fd4671',
         'Das ist das erste Jodel von linus, cool oder?',
         '2024-05-23 15:30:45'
     );
@@ -66,7 +76,7 @@ INSERT into
 values (
         1,
         1,
-        'UserId1',
+        '60a6cae6-5fb4-4d50-9d16-ced3b3cc82cf',
         'Das ist ein Kommentar zum ersten Jodel',
         '2024-05-23 15:30:45'
     );

@@ -3,8 +3,14 @@ package com.example.jodel.comment.model;
 import java.time.LocalDateTime;
 import com.example.jodel.jodel.model.Jodel;
 import com.example.jodel.user.model.*;
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 public class Comment {
 
@@ -13,42 +19,15 @@ public class Comment {
     private long id;
 
     @ManyToOne
+    @JsonBackReference("post-comments")
     @JoinColumn(name = "f_jodel")
     Jodel jodel;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "f_user")
     UserAccount user;
 
     String text;
     LocalDateTime timestemp;
-
-    public long getId() {
-        return id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public LocalDateTime getTimestemp() {
-        return timestemp;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public void setTimestemp(LocalDateTime timestemp) {
-        this.timestemp = timestemp;
-    }
-
-    public void setF_user(UserAccount user) {
-        this.user = user;
-    }
-
-    public void setF_jodel(Jodel jodel) {
-        this.jodel = jodel;
-    }
 
 }

@@ -6,21 +6,15 @@ services:
       dockerfile: Dockerfile
     container_name: spring
     volumes:
-      - "./backend/jodel/src:/build/src"
-      - "./backend/jodel/target:/build/target:cached"
-    # develop:
-    #   watch:
-    #     - path: ./backend/jodel
-    #       target: /src
-    #       action: sync+restart
-
+      - "./backend/jodel:/app"
+      - ~/.m2:/root/.m2
     ports:
       - "8082:8082"
     environment:
       - POSTGRES_USER=jodel
       - POSTGRES_PASSWORD=jodel
       - POSTGRES_DB=jodel
-    command: "mvn spring-boot:run"      
+    command: "spring-boot:run"      
     depends_on:
       - spring-db 
     networks:
@@ -61,7 +55,7 @@ services:
       KC_HEALTH_ENABLED: 'true'
       KC_HTTP_ENABLED: 'true'
       KC_METRICS_ENABLED: 'true'
-      KC_HOSTNAME_URL: http://localhost:8180
+      KC_HOSTNAME_URL: http://keycloak:8180
       KC_HTTP_PORT: 8180
       KC_PROXY: reencrypt
       KEYCLOAK_IMPORT: /opt/keycloak/data/import/

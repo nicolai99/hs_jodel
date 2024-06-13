@@ -4,7 +4,9 @@ RUN mkdir -p /workspace
 WORKDIR /workspace
 COPY pom.xml /workspace
 COPY src /workspace/src
-RUN mvn -f pom.xml -DskipTests clean package
+RUN mvn dependency:go-offline -B
+RUN mvn package -DskipTests
+
 
 ### STAGE 2: Run ###
 FROM openjdk:17

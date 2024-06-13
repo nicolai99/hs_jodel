@@ -67,11 +67,11 @@ public class VoteService {
         } else {
             // Wenn kein Vote existiert, erstellen Sie einen neuen
             vote = new Vote();
-            vote.setF_user(user);
+            vote.setUser(user);
             if (voteType == VoteType.jodel) {
-                vote.setF_jodel(jodel);
+                vote.setJodel(jodel);
             } else if (voteType == VoteType.comment) {
-                vote.setF_comment(comment);
+                vote.setComment(comment);
             }
             vote.setDirection(direction);
         }

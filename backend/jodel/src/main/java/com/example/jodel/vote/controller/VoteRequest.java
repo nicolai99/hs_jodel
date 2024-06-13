@@ -10,7 +10,6 @@ import lombok.Setter;
 public class VoteRequest {
 
     private long f_entity;
-    private String f_user;
     private int direction;
     private VoteType voteType;
 

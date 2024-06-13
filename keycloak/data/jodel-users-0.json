@@ -18,7 +18,7 @@
       "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
     } ],
     "disableableCredentialTypes" : [ ],
-    "requiredActions" : [],
+    "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-jodel" ],
     "notBefore" : 0,
     "groups" : [ ]
@@ -40,7 +40,7 @@
       "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
     } ],
     "disableableCredentialTypes" : [ ],
-    "requiredActions" : [],
+    "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-jodel" ],
     "notBefore" : 0,
     "groups" : [ ]

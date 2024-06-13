@@ -1,33 +1,27 @@
+import keycloak from "./Keycloak";
 const host = "http://localhost:8082/jodel/api";
-
-// async function apiRequest(endpoint, options = {}) {
-
-//   const { method = 'GET' } = options;
-//   const requestOptions = { method };
-
-//   console.log(host + endpoint);
-//   const request = await fetch(host + endpoint, requestOptions);
-//   const data = await request.json();
-//   alert(JSON.stringify(data));
-//   return data;
-// }
 
 async function apiRequest(endpoint, options = {}) {
   const { method = "GET", body } = options;
+  console.log(keycloak.token);
 
   const requestOptions = {
     method,
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${keycloak.token}`,
     },
     body: JSON.stringify(body),
   };
 
   console.log(host + endpoint);
   const request = await fetch(host + endpoint, requestOptions);
-  if(!request.ok){
-    throw Error;
+  // if(!request.ok){
+  //   throw Error;
+  // }
+  if (request.status == 401) {
   }
+
   const data = await request.json();
   // alert(JSON.stringify(data));
   return data;
@@ -45,14 +39,14 @@ async function getJodelVote(id, type) {
 // "/api/vote/setvote"
 // http://localhost:8082/jodel/api/vote/setvote
 function setVote(postID, direction, userID, type) {
-  return apiRequest('/vote/setvote', {
-    method: 'POST',
+  return apiRequest("/vote/setvote", {
+    method: "POST",
     body: {
       f_entity: postID,
       direction: direction,
       f_user: userID,
       voteType: type,
-    }
+    },
   });
 }
 
@@ -86,8 +80,6 @@ function getCurrentLocation() {
     }
   });
 }
-
-
 
 const apiService = {
   getAllJodel,

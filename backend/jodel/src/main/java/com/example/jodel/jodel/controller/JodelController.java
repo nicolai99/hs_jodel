@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.jodel.authentification.NameConverter;
 import com.example.jodel.jodel.model.Jodel;
 import com.example.jodel.jodel.service.JodelService;
 import com.example.jodel.jodel.service.JodelWithDistanceDto;
@@ -27,8 +28,9 @@ public class JodelController {
 
     @PostMapping("/jodel/setjodel")
     public ResponseEntity<Jodel> setBooking(
-            @RequestBody JodelRequest jodelRequest) {
-        return ResponseEntity.ok(jodelService.setJodel(jodelRequest.getText(), jodelRequest.getF_user(),
+            @RequestBody JodelRequest jodelRequest, @RequestHeader("Authorization") String authorizationHeader) {
+        String id = new NameConverter(authorizationHeader).sub;
+        return ResponseEntity.ok(jodelService.setJodel(jodelRequest.getText(), id,
                 jodelRequest.getLatitude(), jodelRequest.getLongitude()));
     }
 

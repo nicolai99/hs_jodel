@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.jodel.authentification.NameConverter;
 import com.example.jodel.exception.VoteIsAlreadySet;
 import com.example.jodel.vote.model.Vote;
 import com.example.jodel.vote.model.VoteType;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @RequestMapping("/jodel/api")
 @RestController
@@ -26,9 +28,10 @@ public class VoteController {
 
     @PostMapping("/vote/setvote")
     public ResponseEntity<?> setVote(
-            @RequestBody VoteRequest voteRequest) {
+            @RequestBody VoteRequest voteRequest, @RequestHeader("Authorization") String authorizationHeader) {
+        String id = new NameConverter(authorizationHeader).sub;
         try {
-            Vote vote = voteService.setVote(voteRequest.getF_entity(), voteRequest.getF_user(),
+            Vote vote = voteService.setVote(voteRequest.getF_entity(), id,
                     voteRequest.getDirection(), voteRequest.getVoteType());
             return ResponseEntity.ok(vote);
         } catch (VoteIsAlreadySet e) {

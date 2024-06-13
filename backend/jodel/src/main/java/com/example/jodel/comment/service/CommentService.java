@@ -1,6 +1,7 @@
 package com.example.jodel.comment.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,15 @@ public class CommentService {
         return rep.findById(id);
     }
 
+    public List<Comment> getAllComment() {
+        return rep.findAll();
+    }
+
     public Comment setComment(String text, long f_jodel, String f_user) {
         Comment comment = new Comment();
         comment.setText(text);
-        comment.setF_jodel(jodelService.getJodelById(f_jodel).orElseThrow());
-        comment.setF_user(userAccountService.getUserAccountByID(f_user).orElseThrow());
+        comment.setJodel(jodelService.getJodelById(f_jodel).orElseThrow());
+        comment.setUser(userAccountService.getUserAccountByID(f_user).orElseThrow());
         LocalDateTime now = LocalDateTime.now();
         comment.setTimestemp(now);
         return rep.save(comment);
