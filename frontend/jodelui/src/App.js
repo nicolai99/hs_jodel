@@ -1,28 +1,26 @@
 import React, { useState, useEffect } from "react";
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Route,
   Routes,
   NavLink,
+  useNavigate,
 } from "react-router-dom";
 import { ReactKeycloakProvider, useKeycloak } from "@react-keycloak/web";
 import "./App.css";
-import apiService from "./services/Api";
 import JodelPage from "./Pages/JodelPage";
 import AccountPage from "./Pages/AccountPage";
 import CommentPage from "./Pages/CommentPage";
-import keycloak from "./services/Keycloak"; // Stelle sicher, dass keycloak richtig importiert wird
+import keycloak from "./services/Keycloak";
+import PrivateRoute from "./services/PrivateRoute";
 
 function App() {
-  useEffect(() => {
-    keycloak.init({ onLoad: "login-required" }).then((authenticated) => {
-      if (authenticated) {
-        console.log("User is authenticated");
-      } else {
-        console.error("Authentication failed");
-      }
+  // const navigate = useNavigate();
+  const keyLogout = () => {
+    keycloak.logout({
+      redirectUri: "http://localhost:3000/account",
     });
-  }, []);
+  };
 
   const [displayName, setDisplayName] = useState("");
 
@@ -42,26 +40,28 @@ function App() {
     }, 500);
   };
 
-  const keyLogout = () => {
-    keycloak.logout({
-      redirectUri: `/`,
-    });
-  };
-
+  // const keycloakEventHandler = (event) => {
+  //   if (event === "onAuthSuccess") {
+  //     navigate("/posts");
+  //   }
+  // };
+  //onEvent={keycloakEventHandler}
   return (
     <ReactKeycloakProvider authClient={keycloak}>
-      <Router>
+      <BrowserRouter>
         <div className="container">
           <header className="header">
             <h1>Jodel</h1>
             <div className="header-right">
-              <p>{displayName}</p>
+              <div className="accountName">
+                <p>{displayName}</p>
+              </div>
               <button onClick={keyLogout}>logout</button>
             </div>
           </header>
 
           <nav className="tab-bar">
-            <NavLink to="/" end>
+            <NavLink to="/jodel" end>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="24px"
@@ -88,12 +88,19 @@ function App() {
           </nav>
 
           <Routes>
-            <Route path="/" element={<JodelPage />} />
+            <Route
+              path="/jodel"
+              element={
+                <PrivateRoute>
+                  <JodelPage />
+                </PrivateRoute>
+              }
+            />
             <Route path="/account" element={<AccountPage />} />
             <Route path="/jodel/:id" element={<CommentPage />} />
           </Routes>
         </div>
-      </Router>
+      </BrowserRouter>
     </ReactKeycloakProvider>
   );
 }
