@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   BrowserRouter,
   Route,
@@ -35,7 +35,7 @@ function App() {
         const name = `${decodedToken.preferred_username}`.toUpperCase();
         setDisplayName(name);
       } else {
-        console.error("Benutzer ist nicht authentifiziert.");
+        // console.error("Benutzer ist nicht authentifiziert.");
       }
     }, 500);
   };

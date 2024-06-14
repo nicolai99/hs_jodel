@@ -3,8 +3,6 @@ const host = "http://localhost:8082/jodel/api";
 
 async function apiRequest(endpoint, options = {}) {
   const { method = "GET", body } = options;
-  console.log(keycloak.token);
-
   const requestOptions = {
     method,
     headers: {
@@ -16,9 +14,9 @@ async function apiRequest(endpoint, options = {}) {
 
   console.log(host + endpoint);
   const request = await fetch(host + endpoint, requestOptions);
-  // if(!request.ok){
-  //   throw Error;
-  // }
+  if (!request.ok) {
+    throw new Error(request.status);
+  }
   if (request.status == 401) {
   }
 
