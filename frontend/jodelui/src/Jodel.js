@@ -1,98 +1,24 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Toast } from "primereact/toast";
-import "primereact/resources/primereact.min.css";
+import React, { useState } from "react";
 import apiService from "./services/Api";
-import "primereact/resources/themes/saga-blue/theme.css";
-import "primeicons/primeicons.css";
 import "./Jodel.css";
 import Comments from "./Comments";
+import Votes from "./Vote";
 // import { NavLink } from "react-router-dom";
 
 function Jodel({ jodel }) {
-  const [votes, setVotes] = useState(0);
   const [showComments, setShowComments] = useState(false);
+  const [reloadedJodel, setReloadedJodel] = useState(jodel);
   // const link = `/jodel/${jodel.id}`; // Für Comment-Page
 
-  const getVotes = async () => {
-    const voteNumber = await apiService.getJodelVote(jodel.id, "jodel");
-    setVotes(voteNumber);
-  };
-
-  useEffect(() => {
-    getVotes();
-  }, [jodel.id]);
+  const reloadJodel = async () => {
+    const response = await apiService.getJodelById(jodel.id);
+    setReloadedJodel(response);
+  }
 
   const toggleComments = () => {
+    //neu fetchen
+    reloadJodel();
     setShowComments(!showComments);
-  };
-
-  // -> hat User schon gevotet?
-
-  // const[karma] = await useState( getVotes());
-
-  const handleUpvote = async () => {
-    try {
-      await postVote(1);
-      showUp();
-    } catch (error) {
-      if (error.message == 409) {
-        showConflict();
-      }
-    }
-    await getVotes();
-  };
-
-  const handleDownvote = async () => {
-    try {
-      await postVote(-1);
-      showDown();
-    } catch (error) {
-      if (error.message == 409) {
-        showConflict();
-      }
-    }
-    await getVotes();
-  };
-
-  const toast = useRef(null);
-
-  const showConflict = () => {
-    toast.current.show({
-      severity: "info",
-      icon: "pi pi-angle-up",
-      detail: "Dieser Vote bereits getätigt",
-      life: 1000,
-    });
-  };
-
-  const showUp = () => {
-    toast.current.show({
-      severity: "success",
-      icon: "pi pi-angle-up",
-      detail: "Upvote",
-      life: 1000,
-    });
-  };
-  const showDown = () => {
-    toast.current.show({
-      severity: "error",
-      icon: "pi pi-angle-down",
-      detail: "Downvote",
-      life: 1000,
-    });
-  };
-
-  const postVote = async (direction) => {
-    try {
-      const myVote = await apiService.setVote(
-        jodel.id,
-        direction,
-        //hier der angemeldete User (nicht der, des jodels)
-        "jodel"
-      );
-    } catch (error) {
-      throw error;
-    }
   };
 
   return (
@@ -110,9 +36,7 @@ function Jodel({ jodel }) {
 
       <div className="jodel-footer">
         <div className="jodel-karma">
-          <button className="vote-button" onClick={handleDownvote}>{'<'}</button>
-          <span>{votes}</span>
-          <button className="vote-button" onClick={handleUpvote}>{'>'}</button>
+          <Votes id={jodel.id} type={'jodel'}/>
         </div>
 
         
@@ -132,13 +56,10 @@ function Jodel({ jodel }) {
       </div>
 
       {showComments && (
-        <Comments jodel={jodel}/>
+        // jodel neu fetchen und übergeben
+        <Comments jodel={reloadedJodel}/>
       )}
 
-
-      <div>
-        <Toast ref={toast} position="top-center" />
-      </div>
     </div>
   );
 }
