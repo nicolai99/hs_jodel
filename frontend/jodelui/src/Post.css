@@ -1,4 +1,4 @@
-   .post {
+   /* .post {
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 10px;
@@ -36,7 +36,6 @@
     display: flex;
     align-items: center;
     text-align: center;
-    /* font-weight: bold; */
     font-size: 18px;
   }
   
@@ -58,4 +57,4 @@
   
   .comment-button svg {
     color: white;
-  }
+  } */

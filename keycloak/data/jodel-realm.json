@@ -351,7 +351,7 @@
   "otpPolicyLookAheadWindow" : 1,
   "otpPolicyPeriod" : 30,
   "otpPolicyCodeReusable" : false,
-  "otpSupportedApplications" : [ "totpAppMicrosoftAuthenticatorName", "totpAppGoogleName", "totpAppFreeOTPName" ],
+  "otpSupportedApplications" : [ "totpAppGoogleName", "totpAppFreeOTPName", "totpAppMicrosoftAuthenticatorName" ],
   "webAuthnPolicyRpEntityName" : "keycloak",
   "webAuthnPolicySignatureAlgorithms" : [ "ES256" ],
   "webAuthnPolicyRpId" : "",
@@ -1137,7 +1137,7 @@
       "subType" : "authenticated",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "saml-user-property-mapper", "oidc-full-name-mapper", "saml-user-attribute-mapper", "oidc-address-mapper", "oidc-sha256-pairwise-sub-mapper", "saml-role-list-mapper", "oidc-usermodel-property-mapper", "oidc-usermodel-attribute-mapper" ]
+        "allowed-protocol-mapper-types" : [ "oidc-sha256-pairwise-sub-mapper", "saml-user-property-mapper", "oidc-address-mapper", "saml-user-attribute-mapper", "saml-role-list-mapper", "oidc-usermodel-property-mapper", "oidc-full-name-mapper", "oidc-usermodel-attribute-mapper" ]
       }
     }, {
       "id" : "36f510da-342d-49a2-917d-cdd45f401447",
@@ -1169,7 +1169,7 @@
       "subType" : "anonymous",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "oidc-sha256-pairwise-sub-mapper", "saml-role-list-mapper", "saml-user-attribute-mapper", "oidc-full-name-mapper", "oidc-usermodel-attribute-mapper", "oidc-usermodel-property-mapper", "saml-user-property-mapper", "oidc-address-mapper" ]
+        "allowed-protocol-mapper-types" : [ "saml-role-list-mapper", "saml-user-attribute-mapper", "oidc-sha256-pairwise-sub-mapper", "saml-user-property-mapper", "oidc-address-mapper", "oidc-usermodel-attribute-mapper", "oidc-full-name-mapper", "oidc-usermodel-property-mapper" ]
       }
     } ],
     "org.keycloak.userprofile.UserProfileProvider" : [ {

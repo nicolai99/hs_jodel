@@ -54,7 +54,7 @@ function App() {
             <h1>Jodel</h1>
             <div className="header-right">
               <div className="accountName">
-                <p>{displayName}</p>
+                <p>HALLO, {displayName}!</p>
               </div>
               <button onClick={keyLogout}>logout</button>
             </div>

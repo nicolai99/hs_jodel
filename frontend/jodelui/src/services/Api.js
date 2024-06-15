@@ -79,11 +79,28 @@ function getCurrentLocation() {
   });
 }
 
+
+async function getJodelById(id) {
+  return apiRequest(`/jodel/${id}`);
+}
+
+async function setComment(jodelId, text) {
+  return apiRequest("/comment", {
+    method: "POST",
+    body: {
+      text: text,
+      f_jodel: jodelId
+    },
+  });
+}
+
 const apiService = {
   getAllJodel,
   getJodelVote,
   setJodel,
   getCurrentLocation,
   setVote,
+  getJodelById,
+  setComment,
 };
 export default apiService;

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import "./JodelPage.css";
 import Jodel from "../Jodel";
 import apiService from "../services/Api";
+
+
 const JodelPage = () => {
   const [filter, setFilter] = useState("Neueste");
   const [isCreatingPost, setIsCreatingPost] = useState(false);
@@ -18,6 +20,7 @@ const JodelPage = () => {
   const getAllJodel = async () => {
     try {
       const response = await apiService.getAllJodel();
+      console.log("Jodel response:", response);
       setJodels(response);
     } catch (error) {
       //  console.error("getJodel-error: ", error);
@@ -43,8 +46,11 @@ const JodelPage = () => {
   };
 
   const postNewJodel = async () => {
-    const location = await apiService.getCurrentLocation();
-    const newJodel = await apiService.setJodel(
+    if (newJodelText == "") {
+      alert("Du musst einen Text eingeben.");
+    } else {
+      const location = await apiService.getCurrentLocation();
+      const newJodel = await apiService.setJodel(
       newJodelText,
       location.lat,
       location.lon
@@ -53,6 +59,7 @@ const JodelPage = () => {
     setIsCreatingPost(false);
     // apiService.setJodel(newJodelText);
     setNewJodelText("");
+    }
   };
 
   return (
@@ -78,12 +85,7 @@ const JodelPage = () => {
             <option value="Beliebteste">Beliebteste</option>
             <option value="Kommentare">Kommentare</option>
           </select>
-          <button
-            className="new-post-button"
-            onClick={handleNewPostButtonClick}
-          >
-            +
-          </button>
+          <button className="new-post-button" onClick={handleNewPostButtonClick}>+</button>
         </div>
       )}
 

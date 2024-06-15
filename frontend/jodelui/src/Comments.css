@@ -1,0 +1,73 @@
+  .comments-section {
+    overflow: hidden;
+    opacity: 1;
+    margin-top: 10px;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    transition: opacity 2.5s ease-out;
+  }
+  
+  .comments-section .expanded {
+    transition: opacity 2.5s ease-in;
+    opacity: 0;
+  }
+  
+  .comment {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .comment-username {
+    font-weight: bold;
+  }
+  
+  .comment-text {
+    margin: 5px 0;
+  }
+  
+  .comment-karma {
+    color: white;
+    font-size: 18px;
+  }
+  
+  .add-comment {
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+  }
+  
+  
+  .add-comment input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  .add-comment button {
+    /* background-color: #ccc; */
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .scroll-container {
+    max-height: 300px; /* Adjust as necessary */
+    overflow-y: auto;
+  }
+  
+  /* Chrome, Safari, Opera */
+  .scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scroll-container {
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* IE, Edge */
+  }

@@ -6,6 +6,10 @@
 }
 
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding-top: 5px;
   background-color: white;
   display: flex;
   justify-content: space-between;
@@ -15,28 +19,15 @@
 }
 
 .accountName{
-  background-color: #FF8D00;
-  border-radius: 50%;
+  /* background-color: #FF8D00;
+  border-radius: 50%; */
+  margin-right: 20px;
 }
 
 .accountName>*{
-color: white;
+  font-weight: 500;
+  color: #FF8D00;
 }
-
-/* .header {
-  background-color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 3px solid #ECECEC;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  padding-top: 10px;
-  padding-bottom: 10px;
-} */
 
 .header h1 {
   margin: 0;
@@ -48,6 +39,8 @@ color: white;
   display: flex;
   align-items: center;
 }
+
+
 
 
 .tab-bar {

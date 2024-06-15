@@ -39,7 +39,8 @@ public class VoteService {
     }
 
     public int getSumVoteFromComment(long commentId) {
-        return rep.sumDirectionByCommentId(commentId);
+        Integer sum = rep.sumDirectionByCommentId(commentId);
+        return sum != null ? sum : 0;
     }
 
     public Optional<Vote> getVoteByJodelAndUser(Jodel jodel, UserAccount user) {
