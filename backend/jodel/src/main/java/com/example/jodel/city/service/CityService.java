@@ -1,5 +1,6 @@
 package com.example.jodel.city.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,10 @@ public class CityService {
 
     public Optional<City> getCityById(long id) {
         return rep.findById(id);
+    }
+
+    public List<City> getAllCity() {
+        return rep.findAll();
     }
 
     public double getDistance(double lat, double lon, City city) {

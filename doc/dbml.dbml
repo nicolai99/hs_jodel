@@ -1,0 +1,49 @@
+Table "city" {
+  "latitude" doubleprecision [not null]
+  "longitude" doubleprecision [not null]
+  "id" bigint [pk, not null]
+  "name" "character varying(255)"
+}
+
+Table "comment" {
+  "f_jodel" bigint
+  "id" bigint [pk, not null]
+  "timestemp" timestamp(6)
+  "f_user" "character varying(255)"
+  "text" "character varying(255)"
+}
+
+Table "jodel" {
+  "f_city" bigint
+  "id" bigint [pk, not null]
+  "timestemp" timestamp(6)
+  "f_user" "character varying(255)"
+  "text" "character varying(255)"
+}
+
+Table "user_account" {
+  "id" "character varying(255)" [pk, not null]
+  "name" "character varying(255)"
+}
+
+Table "vote" {
+  "direction" integer [not null]
+  "f_comment" bigint
+  "f_jodel" bigint
+  "id" bigint [pk, not null]
+  "f_user" "character varying(255)"
+}
+
+Ref "fk94donvcj183kjsya6auu8uhpw":"user_account"."id" < "vote"."f_user"
+
+Ref "fkagw2yx9aitg9xqbf8v9vkvfl2":"jodel"."id" < "comment"."f_jodel"
+
+Ref "fkmqfuyqdc6w42x0vl9ctkf4ie2":"user_account"."id" < "comment"."f_user"
+
+Ref "fkorcun89tasyo13i5th2hifkbe":"user_account"."id" < "jodel"."f_user"
+
+Ref "fkpkv85g6imlnp7t2wdekd7yq48":"city"."id" < "jodel"."f_city"
+
+Ref "fkqv4apmtih1hjv5fqff26w4mi9":"comment"."id" < "vote"."f_comment"
+
+Ref "fkss45oklub24kv6w8vikewlqcn":"jodel"."id" < "vote"."f_jodel"

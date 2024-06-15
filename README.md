@@ -45,3 +45,13 @@ https://nominatim.openstreetmap.org/reverse?lat=48.738406&lon=9.30811
 ## Export erstellen
 
 docker exec -it keycloak /opt/keycloak/bin/kc.sh export --optimized --dir=/opt/keycloak/data/import --realm jodel
+
+## DBML erstellen
+
+mit DB verbinden und SQL Schema erstellen
+pg_dump -U jodel -f jodelDump.sql -s
+
+Lokal installieren
+npm install -g @dbml/cli
+sql2dbml jodelDump.sql --postgres -o out.dbml
+.dbml mit diverser Software als Diagramm darstellbar

@@ -2,8 +2,15 @@ package com.example.jodel;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.example.jodel.vote.service.VoteService;
 import com.example.jodel.city.model.City;
@@ -14,8 +21,9 @@ import com.example.jodel.jodel.service.JodelService;
 import com.example.jodel.vote.model.Vote;
 import com.example.jodel.vote.model.VoteType;
 
-@ActiveProfiles("dev")
 @SpringBootTest
+@ActiveProfiles("test")
+@AutoConfigureMockMvc
 class JodelApplicationTests {
 
 	@Test
@@ -30,15 +38,18 @@ class JodelApplicationTests {
 	@Autowired
 	CityService cityService;
 
+	@Autowired
+	private MockMvc mockMvc;
+
 	@Test
 
 	void testVote() {
 
 		try {
 			VoteType voteType = VoteType.jodel;
-			Vote vote1 = vote.setVote(1, "UserId1", 1, voteType);
+			Vote vote1 = vote.setVote(1, "60a6cae6-5fb4-4d50-9d16-ced3b3cc82cf", 1, voteType);
 			System.out.println(vote1.toString());
-			Vote vote2 = vote.setVote(1, "UserId1", 1, voteType);
+			Vote vote2 = vote.setVote(1, "60a6cae6-5fb4-4d50-9d16-ced3b3cc82cf", 1, voteType);
 		} catch (VoteIsAlreadySet e) {
 			System.out.println(e.getMessage());
 
@@ -46,8 +57,8 @@ class JodelApplicationTests {
 
 		try {
 			VoteType voteType = VoteType.jodel;
-			Vote vote3 = vote.setVote(1, "UserId1", 1, voteType);
-			Vote vote4 = vote.setVote(1, "UserId2", 1, voteType);
+			Vote vote3 = vote.setVote(1, "60a6cae6-5fb4-4d50-9d16-ced3b3cc82cf", 1, voteType);
+			Vote vote4 = vote.setVote(1, "6b6dc989-8ade-493a-a459-eddc42fd4671", 1, voteType);
 			System.out.println(vote3.toString());
 			System.out.println(vote4.toString());
 		} catch (VoteIsAlreadySet e) {
@@ -74,4 +85,29 @@ class JodelApplicationTests {
 			System.out.println(e.getMessage());
 		}
 	}
+
+	@Test
+	@WithMockUser(username = "nicolai", roles = { "USER" })
+	void testJodelWithDistance() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders
+				.get("/jodel/api/jodelwithdistance?lat=48.72&lon=9.3&maxdistance=50"))
+				.andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());
+	}
+
+	@Test
+	@WithMockUser(username = "nicolai", roles = { "USER" })
+	void testJodel() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders
+				.get("/jodel/api/jodel"))
+				.andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());
+	}
+
+	@Test
+	@WithMockUser(username = "nicolai", roles = { "USER" })
+	void City() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders
+				.get("/jodel/api/city"))
+				.andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());
+	}
+
 }

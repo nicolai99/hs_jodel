@@ -45,7 +45,8 @@ public class JodelController {
     }
 
     @GetMapping("/jodelwithdistance")
-    public List<JodelWithDistanceDto> getAllJodelWithDistance(@RequestParam double lat, @RequestParam double lon) {
-        return jodelService.getAllJodelWithDistance(lat, lon);
+    public List<JodelWithDistanceDto> getAllJodelWithDistance(@RequestParam double lat, @RequestParam double lon,
+            @RequestParam double maxdistance) {
+        return jodelService.getAllJodelWithDistance(lat, lon, maxdistance);
     }
 }

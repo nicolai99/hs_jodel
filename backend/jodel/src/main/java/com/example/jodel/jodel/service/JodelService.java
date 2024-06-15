@@ -3,6 +3,7 @@ package com.example.jodel.jodel.service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.AbstractMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,15 +32,19 @@ public class JodelService {
         return rep.findAll();
     }
 
-    public List<JodelWithDistanceDto> getAllJodelWithDistance(double lat, double lon) {
+    public List<JodelWithDistanceDto> getAllJodelWithDistance(double lat, double lon, double maxDistance) {
         List<Jodel> jodels = rep.findAll();
 
         List<JodelWithDistanceDto> jodelsWithDistance = jodels.stream()
                 .map(jodel -> {
                     double distance = cityService.getDistance(lat, lon, jodel.getCity());
+                    return new AbstractMap.SimpleEntry<>(jodel, distance);
+                })
+                .filter(entry -> entry.getValue() <= maxDistance)
+                .map(entry -> {
                     JodelWithDistanceDto dto = new JodelWithDistanceDto();
-                    dto.setJodel(jodel);
-                    dto.setDistance(distance);
+                    dto.setJodel(entry.getKey());
+                    dto.setDistance(entry.getValue());
                     return dto;
                 })
                 .collect(Collectors.toList());
