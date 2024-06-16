@@ -16,7 +16,8 @@
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #ddd;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.1);
   }
   
   .comment-username {

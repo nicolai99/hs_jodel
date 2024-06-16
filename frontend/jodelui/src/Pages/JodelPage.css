@@ -1,7 +1,14 @@
+.post-button-container {
+  position: fixed;
+  top: 110px;
+  right: calc(50vw - 310px); 
+  z-index: 1;
+}
+
 .new-post-button {
   background: none;
   border: none;
-  background-color: #FF8D00;
+  background-color: var(--transparent-orange); /* transparent machen*/
   color: #fff;
   width: 60px;
   height: 60px;
@@ -16,7 +23,7 @@
 .filter {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .filter select {
@@ -45,7 +52,7 @@
   height: 60%;
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #FFA000;
+  border: 1px solid var(--main-orange);
   border-radius: 5px;
   margin-bottom: 10px;
 }
@@ -56,7 +63,7 @@
 }
 
 .new-post-buttons button {
-  background-color: #FFA000;
+  background-color: var(--main-orange);
   border: none;
   padding: 10px;
   color: white;
@@ -74,3 +81,9 @@
   color: black;
 }
 
+
+@media (max-width: 700px) {
+  .post-button-container {
+    right: 40px;
+  }
+}

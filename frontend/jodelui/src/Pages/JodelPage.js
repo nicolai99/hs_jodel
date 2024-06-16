@@ -2,17 +2,26 @@ import React, { useState, useEffect, useRef } from "react";
 import "./JodelPage.css";
 import Jodel from "../Jodel";
 import apiService from "../services/Api";
+import { Dropdown } from 'primereact/dropdown';
+import { Button } from 'primereact/button';
 
 
 const JodelPage = () => {
-  const [filter, setFilter] = useState("Neueste");
   const [isCreatingPost, setIsCreatingPost] = useState(false);
   const [newJodelText, setNewJodelText] = useState("");
   const [jodels, setJodels] = useState([]);
 
-  const handleFilterChange = (event) => {
-    setFilter(event.target.value);
-  };
+
+  const defaultCity = { name: 'Neueste', code: 'n' };
+  const [selectedCity, setSelectedCity] = useState(defaultCity);
+  const cities = [
+        { name: 'Neueste', code: 'n' },
+        { name: 'Beliebteste', code: 'b' },
+        { name: 'Kommentare', code: 'k' }
+  ];
+
+  
+  
   const getLocation = async () => {
     const location = await apiService.getCurrentLocation();
     alert(String(location.lat) + " " + String(location.lon));
@@ -80,11 +89,19 @@ const JodelPage = () => {
 
       {!isCreatingPost && (
         <div className="filter">
-          <select value={filter} onChange={handleFilterChange}>
+          {/* <select value={filter} onChange={handleFilterChange}>
             <option value="Neueste">Neueste</option>
             <option value="Beliebteste">Beliebteste</option>
             <option value="Kommentare">Kommentare</option>
-          </select>
+          </select> */}
+          <Dropdown  value={selectedCity} onChange={(e) => setSelectedCity(e.value)} options={cities} optionLabel="name" 
+            placeholder="Standort wählen" className="w-full md:w-14rem" />
+          {/* <button className="new-post-button" onClick={handleNewPostButtonClick}>+</button> */}
+        </div>
+      )}
+
+      {!isCreatingPost && (
+        <div className="post-button-container">
           <button className="new-post-button" onClick={handleNewPostButtonClick}>+</button>
         </div>
       )}

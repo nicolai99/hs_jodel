@@ -94,6 +94,10 @@ async function setComment(jodelId, text) {
   });
 }
 
+async function getCities() {
+  return apiRequest('/city');
+}
+
 const apiService = {
   getAllJodel,
   getJodelVote,
@@ -102,5 +106,6 @@ const apiService = {
   setVote,
   getJodelById,
   setComment,
+  getCities,
 };
 export default apiService;
