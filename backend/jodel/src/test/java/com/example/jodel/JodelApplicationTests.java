@@ -6,7 +6,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -73,9 +72,9 @@ class JodelApplicationTests {
 	@Test
 	void testCity() {
 		City city1 = new City();
-		city1 = cityService.getCityById(1).orElseThrow();
+		city1 = cityService.getCityById(4).orElseThrow();
 
-		System.out.println("Distance " + cityService.getDistance(48.9396, 9.2646, city1));
+		System.out.println("Distance " + cityService.getDistance(48.93, 9.26, city1));
 
 		City city = new City();
 		try {
@@ -90,7 +89,7 @@ class JodelApplicationTests {
 	@WithMockUser(username = "nicolai", roles = { "USER" })
 	void testJodelWithDistance() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
-				.get("/jodel/api/jodelwithdistance?lat=48.72&lon=9.3&maxdistance=50"))
+				.get("/jodel/api/jodelwithdistance?lat=48.9396&lon=9.2646&maxdistance=50"))
 				.andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());
 	}
 
