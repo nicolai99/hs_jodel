@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { Toast } from "primereact/toast";
 import "primereact/resources/primereact.min.css";
 import apiService from "./services/Api";
-import "primereact/resources/themes/saga-blue/theme.css";
 import "primeicons/primeicons.css";
 import "./Jodel.css";
 

@@ -19,9 +19,18 @@
     border: 1px solid rgba(255, 255, 255, 0.3);
     background-color: rgba(255, 255, 255, 0.1);
   }
+
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+  }
   
   .comment-username {
     font-weight: bold;
+  }
+
+  .comment-time {
+    color: #ddd;
   }
   
   .comment-text {

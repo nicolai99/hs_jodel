@@ -3,36 +3,52 @@ import "./JodelPage.css";
 import Jodel from "../Jodel";
 import apiService from "../services/Api";
 import { Dropdown } from 'primereact/dropdown';
-import { Button } from 'primereact/button';
+import { Toast } from "primereact/toast";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 
 
 const JodelPage = () => {
   const [isCreatingPost, setIsCreatingPost] = useState(false);
   const [newJodelText, setNewJodelText] = useState("");
   const [jodels, setJodels] = useState([]);
-
-
-  const defaultCity = { name: 'Neueste', code: 'n' };
-  const [selectedCity, setSelectedCity] = useState(defaultCity);
-  const cities = [
+  const toast = useRef(null);
+  
+  const defaultOrder = { name: 'Neueste', code: 'n' };
+  const [selectedOrder, setSelectedOrder] = useState(defaultOrder);
+  const order = [
         { name: 'Neueste', code: 'n' },
         { name: 'Beliebteste', code: 'b' },
         { name: 'Kommentare', code: 'k' }
   ];
 
-  
-  
+  // const sortJodels = async (jodels, order) => {
+  //   const sortedJodels = [...jodels]; // Erstelle eine Kopie des Arrays, um die Sortierung durchzuführen
+  //   switch (order) {
+  //     case 'n':
+  //       return sortedJodels.sort((a, b) => b.timestemp - a.timestemp); // Neueste zuerst
+  //     case 'b':
+  //       return sortedJodels.sort((a, b) => b.timestemp - a.timestemp); // Neueste zuerst
+  //     case 'k':
+  //       return sortedJodels.sort((a, b) => b.comments.length - a.comments.length); // Nach Anzahl der Kommentare sortieren
+  //     default:
+  //       return sortedJodels;
+  //   }
+  // }
+  // const sortedJodels = sortJodels([...jodels], selectedOrder.code);
+
   const getLocation = async () => {
     const location = await apiService.getCurrentLocation();
     alert(String(location.lat) + " " + String(location.lon));
   };
+
   const getAllJodel = async () => {
     try {
       const response = await apiService.getAllJodel();
       console.log("Jodel response:", response);
       setJodels(response);
     } catch (error) {
-      //  console.error("getJodel-error: ", error);
+       console.error("getJodel-error: ", error);
     }
   };
 
@@ -40,24 +56,22 @@ const JodelPage = () => {
     getAllJodel();
   }, []);
 
-  // const getVote = async () => {
-  //   apiService.getJodelVote(1, "jodel");
-  // }
-
   const handleNewPostButtonClick = () => {
     setIsCreatingPost(true);
   };
 
   const handlePostCancel = () => {
     setIsCreatingPost(false);
-
     setNewJodelText("");
   };
 
   const postNewJodel = async () => {
-    if (newJodelText == "") {
-      alert("Du musst einen Text eingeben.");
+    if (newJodelText.length === 0) {
+      showToast("info", "Du musst einen Text eingeben.");
+    } else if (newJodelText.length > 255) { 
+      showToast("info", "Text darf nicht über 255 Zeichen lang sein.");
     } else {
+      console.log(newJodelText.length);
       const location = await apiService.getCurrentLocation();
       const newJodel = await apiService.setJodel(
       newJodelText,
@@ -69,6 +83,15 @@ const JodelPage = () => {
     // apiService.setJodel(newJodelText);
     setNewJodelText("");
     }
+  };
+
+  const showToast = (severity, text) => {
+    toast.current.show({
+      severity: severity,
+      icon: "pi pi-angle-up",
+      detail: text,
+      life: 1500,
+    });
   };
 
   return (
@@ -94,9 +117,16 @@ const JodelPage = () => {
             <option value="Beliebteste">Beliebteste</option>
             <option value="Kommentare">Kommentare</option>
           </select> */}
-          <Dropdown  value={selectedCity} onChange={(e) => setSelectedCity(e.value)} options={cities} optionLabel="name" 
-            placeholder="Standort wählen" className="w-full md:w-14rem" />
-          {/* <button className="new-post-button" onClick={handleNewPostButtonClick}>+</button> */}
+          {/* <Dropdown  
+              value={selectedOrder} 
+              onChange={(e) => setSelectedOrder(e.value)} 
+              options={order} 
+              optionLabel="name" 
+              placeholder="Reihenfolge wählen" 
+              className="w-full md:w-14rem" 
+          /> */}
+          <Dropdown  value={selectedOrder} onChange={(e) => setSelectedOrder(e.value)} options={order} optionLabel="name" 
+            placeholder="Reihenfolge wählen" className="w-full md:w-14rem" />
         </div>
       )}
 
@@ -113,6 +143,11 @@ const JodelPage = () => {
           ))}
         </div>
       )}
+
+      <div>
+        <Toast ref={toast} position="top-center"/>
+      </div>
+
     </div>
   );
 };

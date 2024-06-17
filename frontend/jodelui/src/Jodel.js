@@ -21,15 +21,23 @@ function Jodel({ jodel }) {
     setShowComments(!showComments);
   };
 
+  const date = new Date(jodel.timestemp);
+  const options = {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  };
+  const formattedDate = date.toLocaleString('de-DE', options);
+
   return (
 
     // custom backgroundcolor
     <div className="jodel" style={{ backgroundColor: "#2b5a87" }}>
       <div className="jodel-header">
         <div className="jodel-username">{jodel.user.name}</div>
-        <div className="jodel-time">
-          {new Date(jodel.timestemp).toLocaleString()}
-        </div>
+        <div className="jodel-time">{formattedDate}</div>
       </div>
 
       <div className="jodel-text">{jodel.text}</div>
