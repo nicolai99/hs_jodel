@@ -12,8 +12,18 @@
   margin-bottom: 10px;
 }
 
+.name-distance-container {
+  display: flex;
+}
+
 .jodel-username {
   font-weight: bold;
+  padding-right: 15px;
+}
+
+.jodel-distance {
+  font-weight: 400;
+  color: #ddd;
 }
 
 .post-time {

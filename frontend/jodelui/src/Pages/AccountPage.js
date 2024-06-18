@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import './AccountPage.css'
 import keycloak from "../services/Keycloak";
 import apiService from "../services/Api";
+// import { LocationContext } from "../services/LocationContext";
 
 
 const AccountPage = () => {
   const defaultCity = { id: 0, name: 'Mein Standort' };
   const [cities, setCities] = useState([]);
+  // const { location, setLocation } = useContext(LocationContext);
 
   const getCities = async () =>  {
     try {
@@ -33,6 +35,11 @@ const AccountPage = () => {
 
   const [selectedCity, setSelectedCity] = useState(defaultCity);
 
+  // const handleCityChange = (e) => {
+  //   setSelectedCity(e.value);
+  //   setLocation(e.value.name);  // Den location Zustand im Kontext aktualisieren
+  // };
+
   const keyLogout = () => {
     keycloak.logout({
       redirectUri: "http://localhost:3000/account",
@@ -48,7 +55,9 @@ const AccountPage = () => {
       <div className="setting-column top-column">
         <label>Standort</label>
         <div className="card flex justify-content-center">
-        <Dropdown value={selectedCity} onChange={(e) => setSelectedCity(e.value)} options={cities} optionLabel="name" 
+        {/* <Dropdown value={selectedCity} onChange={handleCityChange} options={cities} optionLabel="name" 
+            placeholder="Standort wählen" className="w-full md:w-14rem" /> */}
+            <Dropdown value={selectedCity} onChange={(e) => setSelectedCity(e.value)} options={cities} optionLabel="name" 
             placeholder="Standort wählen" className="w-full md:w-14rem" />
         </div>
       </div>

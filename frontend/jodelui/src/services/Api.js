@@ -12,7 +12,7 @@ async function apiRequest(endpoint, options = {}) {
     body: JSON.stringify(body),
   };
 
-  console.log(host + endpoint);
+  // console.log(host + endpoint);
   const request = await fetch(host + endpoint, requestOptions);
   if (!request.ok) {
     throw new Error(request.status);
@@ -27,6 +27,10 @@ async function apiRequest(endpoint, options = {}) {
 
 async function getAllJodel() {
   return apiRequest("/jodel");
+}
+
+async function getJodelWithDistance(lat, lon, distance) {
+  return apiRequest(`/jodelwithdistance?lat=${lat}&lon=${lon}&maxdistance=${distance}`)
 }
 
 // type: jodel oder comment
@@ -100,6 +104,7 @@ async function getCities() {
 
 const apiService = {
   getAllJodel,
+  getJodelWithDistance,
   getJodelVote,
   setJodel,
   getCurrentLocation,

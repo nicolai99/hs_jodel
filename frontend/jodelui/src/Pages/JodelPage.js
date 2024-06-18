@@ -44,8 +44,9 @@ const JodelPage = () => {
 
   const getAllJodel = async () => {
     try {
-      const response = await apiService.getAllJodel();
-      console.log("Jodel response:", response);
+      // const response = await apiService.getAllJodel();
+      const location = await apiService.getCurrentLocation();
+      const response = await apiService.getJodelWithDistance(location.lat, location.lon, 20);
       setJodels(response);
     } catch (error) {
        console.error("getJodel-error: ", error);
@@ -74,14 +75,15 @@ const JodelPage = () => {
       console.log(newJodelText.length);
       const location = await apiService.getCurrentLocation();
       const newJodel = await apiService.setJodel(
-      newJodelText,
-      location.lat,
-      location.lon
-    );
-    setJodels([...jodels, newJodel]);
-    setIsCreatingPost(false);
-    // apiService.setJodel(newJodelText);
-    setNewJodelText("");
+        newJodelText,
+        location.lat,
+        location.lon
+      );
+      console.log(`Neues Jodel: ${newJodel}`);
+      // setJodels([...jodels, newJodel]); //-> Fehler, da keine ID, hinterlegt ist
+      await getAllJodel();
+      setIsCreatingPost(false);
+      setNewJodelText("");
     }
   };
 
@@ -139,7 +141,7 @@ const JodelPage = () => {
       {!isCreatingPost && (
         <div className="posts">
           {jodels.map((post) => (
-            <Jodel key={post.id} jodel={post} />
+            <Jodel key={post.jodel.id} jodel={post} />
           ))}
         </div>
       )}

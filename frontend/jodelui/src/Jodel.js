@@ -7,11 +7,11 @@ import Votes from "./Vote";
 
 function Jodel({ jodel }) {
   const [showComments, setShowComments] = useState(false);
-  const [reloadedJodel, setReloadedJodel] = useState(jodel);
+  const [reloadedJodel, setReloadedJodel] = useState(jodel.jodel);
   // const link = `/jodel/${jodel.id}`; // Für Comment-Page
 
   const reloadJodel = async () => {
-    const response = await apiService.getJodelById(jodel.id);
+    const response = await apiService.getJodelById(jodel.jodel.id);
     setReloadedJodel(response);
   }
 
@@ -21,7 +21,7 @@ function Jodel({ jodel }) {
     setShowComments(!showComments);
   };
 
-  const date = new Date(jodel.timestemp);
+  const date = new Date(jodel.jodel.timestemp);
   const options = {
     year: 'numeric',
     month: 'numeric',
@@ -36,15 +36,18 @@ function Jodel({ jodel }) {
     // custom backgroundcolor
     <div className="jodel" style={{ backgroundColor: "#2b5a87" }}>
       <div className="jodel-header">
-        <div className="jodel-username">{jodel.user.name}</div>
+        <div className="name-distance-container">
+          <div className="jodel-username">{jodel.jodel.user.name}</div>
+          <div className="jodel-distance">{jodel.distance.toFixed(2)} km</div>
+        </div>
         <div className="jodel-time">{formattedDate}</div>
       </div>
 
-      <div className="jodel-text">{jodel.text}</div>
+      <div className="jodel-text">{jodel.jodel.text}</div>
 
       <div className="jodel-footer">
         <div className="jodel-karma">
-          <Votes id={jodel.id} type={'jodel'}/>
+          <Votes id={jodel.jodel.id} type={'jodel'}/>
         </div>
 
         
