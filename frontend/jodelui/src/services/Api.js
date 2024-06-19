@@ -1,5 +1,6 @@
 import keycloak from "./Keycloak";
-const host = "http://localhost:8082/jodel/api";
+const host = process.env.REACT_APP_BASE_URL;
+console.log(host);
 
 async function apiRequest(endpoint, options = {}) {
   const { method = "GET", body } = options;
@@ -30,7 +31,9 @@ async function getAllJodel() {
 }
 
 async function getJodelWithDistance(lat, lon, distance) {
-  return apiRequest(`/jodelwithdistance?lat=${lat}&lon=${lon}&maxdistance=${distance}`)
+  return apiRequest(
+    `/jodelwithdistance?lat=${lat}&lon=${lon}&maxdistance=${distance}`
+  );
 }
 
 // type: jodel oder comment
@@ -83,7 +86,6 @@ function getCurrentLocation() {
   });
 }
 
-
 async function getJodelById(id) {
   return apiRequest(`/jodel/${id}`);
 }
@@ -93,13 +95,13 @@ async function setComment(jodelId, text) {
     method: "POST",
     body: {
       text: text,
-      f_jodel: jodelId
+      f_jodel: jodelId,
     },
   });
 }
 
 async function getCities() {
-  return apiRequest('/city');
+  return apiRequest("/city");
 }
 
 const apiService = {

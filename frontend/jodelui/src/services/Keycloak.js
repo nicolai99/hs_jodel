@@ -1,5 +1,6 @@
 import Keycloak from "keycloak-js";
-const baseUrl = "http://keycloak:8180";
+const baseUrl = process.env.REACT_APP_KEYCLOAK;
+console.log(baseUrl);
 
 const keycloak = new Keycloak({
   url: baseUrl,
