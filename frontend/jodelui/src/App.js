@@ -12,7 +12,7 @@ import JodelPage from "./Pages/JodelPage";
 import AccountPage from "./Pages/AccountPage";
 import keycloak from "./services/Keycloak";
 import PrivateRoute from "./services/PrivateRoute";
-// import { LocationProvider, LocationContext } from "./services/LocationContext";
+import { LocationProvider, LocationContext } from "./services/LocationContext";
 
 function App() {
   // const navigate = useNavigate();
@@ -28,7 +28,6 @@ function App() {
   useEffect(() => {
     setDisplayNameFromToken();
   }, []);
-
 
   const setDisplayNameFromToken = () => {
     setTimeout(() => {
@@ -48,10 +47,10 @@ function App() {
   //   }
   // };
   //onEvent={keycloakEventHandler}
-  
+
   return (
     <ReactKeycloakProvider authClient={keycloak}>
-      {/* <LocationProvider> */}
+      <LocationProvider>
         <BrowserRouter>
           <div className="container">
             <header className="header">
@@ -100,20 +99,20 @@ function App() {
                   </PrivateRoute>
                 }
               />
-              <Route 
-                path="/account" 
+              <Route
+                path="/account"
                 element={
                   <PrivateRoute>
-                    <AccountPage/>
+                    <AccountPage />
                   </PrivateRoute>
                 }
-                />
+              />
 
               {/* <Route path="/jodel/:id" element={<CommentPage />} /> */}
             </Routes>
           </div>
         </BrowserRouter>
-      {/* </LocationProvider> */}
+      </LocationProvider>
     </ReactKeycloakProvider>
   );
 }

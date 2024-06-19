@@ -1,25 +1,26 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import "./JodelPage.css";
 import Jodel from "../Jodel";
 import apiService from "../services/Api";
-import { Dropdown } from 'primereact/dropdown';
+import { Dropdown } from "primereact/dropdown";
 import { Toast } from "primereact/toast";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
-
+import { useLocation } from "../services/LocationContext";
 
 const JodelPage = () => {
   const [isCreatingPost, setIsCreatingPost] = useState(false);
   const [newJodelText, setNewJodelText] = useState("");
   const [jodels, setJodels] = useState([]);
   const toast = useRef(null);
-  
-  const defaultOrder = { name: 'Neueste', code: 'n' };
+  const { location } = useLocation();
+
+  const defaultOrder = { name: "Neueste", code: "n" };
   const [selectedOrder, setSelectedOrder] = useState(defaultOrder);
   const order = [
-        { name: 'Neueste', code: 'n' },
-        { name: 'Beliebteste', code: 'b' },
-        { name: 'Kommentare', code: 'k' }
+    { name: "Neueste", code: "n" },
+    { name: "Beliebteste", code: "b" },
+    { name: "Kommentare", code: "k" },
   ];
 
   // const sortJodels = async (jodels, order) => {
@@ -43,13 +44,21 @@ const JodelPage = () => {
   };
 
   const getAllJodel = async () => {
-    try {
-      // const response = await apiService.getAllJodel();
-      const location = await apiService.getCurrentLocation();
-      const response = await apiService.getJodelWithDistance(location.lat, location.lon, 20);
-      setJodels(response);
-    } catch (error) {
-       console.error("getJodel-error: ", error);
+    if (location.latitude !== null && location.longitude !== null) {
+      try {
+        const response = await apiService.getJodelWithDistance(
+          location.latitude,
+          location.longitude,
+          50
+        );
+        setJodels(response);
+        console.log(response);
+        // Weiterverarbeitung der Antwort
+      } catch (error) {
+        console.error("Fehler bei getJodel", error);
+      }
+    } else {
+      console.error("Location is not available");
     }
   };
 
@@ -69,7 +78,7 @@ const JodelPage = () => {
   const postNewJodel = async () => {
     if (newJodelText.length === 0) {
       showToast("info", "Du musst einen Text eingeben.");
-    } else if (newJodelText.length > 255) { 
+    } else if (newJodelText.length > 255) {
       showToast("info", "Text darf nicht über 255 Zeichen lang sein.");
     } else {
       console.log(newJodelText.length);
@@ -127,14 +136,25 @@ const JodelPage = () => {
               placeholder="Reihenfolge wählen" 
               className="w-full md:w-14rem" 
           /> */}
-          <Dropdown  value={selectedOrder} onChange={(e) => setSelectedOrder(e.value)} options={order} optionLabel="name" 
-            placeholder="Reihenfolge wählen" className="w-full md:w-14rem" />
+          <Dropdown
+            value={selectedOrder}
+            onChange={(e) => setSelectedOrder(e.value)}
+            options={order}
+            optionLabel="name"
+            placeholder="Reihenfolge wählen"
+            className="w-full md:w-14rem"
+          />
         </div>
       )}
 
       {!isCreatingPost && (
         <div className="post-button-container">
-          <button className="new-post-button" onClick={handleNewPostButtonClick}>+</button>
+          <button
+            className="new-post-button"
+            onClick={handleNewPostButtonClick}
+          >
+            +
+          </button>
         </div>
       )}
 
@@ -147,9 +167,8 @@ const JodelPage = () => {
       )}
 
       <div>
-        <Toast ref={toast} position="top-center"/>
+        <Toast ref={toast} position="top-center" />
       </div>
-
     </div>
   );
 };
