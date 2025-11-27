@@ -84,10 +84,10 @@ function Votes({ id, type }) {
 
   return (
     <div>
-      <div className="jodel-karma">
-          <button className="vote-button" onClick={handleDownvote}>{'<'}</button>
+      <div className="jodel-karma" style={{flexDirection: "column"}}>
+          <button className="vote-button pi pi-angle-up" onClick={handleUpvote}></button>
           <span>{votes}</span>
-          <button className="vote-button" onClick={handleUpvote}>{'>'}</button>
+          <button className="vote-button pi pi-angle-down" onClick={handleDownvote}></button>
         </div>
 
         <div>

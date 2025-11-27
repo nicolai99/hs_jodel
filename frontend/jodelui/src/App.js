@@ -92,6 +92,12 @@ function App() {
 
             <Routes>
               <Route
+                path="/"
+                element={
+                <p>Herzlich Willkommen Jodler, wenn du Jodels sehen und erstellen möchtest, einfach auf "Jodel" unten links klicken</p>
+                }
+              />
+              <Route
                 path="/jodel"
                 element={
                   <PrivateRoute>

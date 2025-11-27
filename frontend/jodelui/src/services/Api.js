@@ -77,11 +77,13 @@ function getCurrentLocation() {
           resolve({ lat, lon });
         },
         (error) => {
-          reject(error);
+          resolve({ lat: 48.73, lon: 9.30 });
+          console.error("Error getting location:", error);
         }
       );
     } else {
-      reject(new Error("Geolocation is not supported by this browser."));
+      resolve({ lat: 48.73, lon: 9.30 });
+      console.error("Geolocation is not supported by this browser.");
     }
   });
 }
