@@ -26,9 +26,12 @@ public class SecurityConfig {
         http.headers()
                 .frameOptions().disable();
 
+        // nur API-Endpunkte benötigen Auth, alles andere erlauben (inkl. static/index)
         http.authorizeHttpRequests((authz) -> authz
                 .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
-                .requestMatchers("/jodel/api/**").authenticated());
+                .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/jodel/api/**").authenticated()
+                .anyRequest().permitAll());
 
         http.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer

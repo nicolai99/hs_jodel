@@ -52,7 +52,7 @@ const JodelPage = () => {
           50
         );
         setJodels(response);
-        console.log(response);
+        
         // Weiterverarbeitung der Antwort
       } catch (error) {
         console.error("Fehler bei getJodel", error);
@@ -81,14 +81,14 @@ const JodelPage = () => {
     } else if (newJodelText.length > 255) {
       showToast("info", "Text darf nicht über 255 Zeichen lang sein.");
     } else {
-      console.log(newJodelText.length);
+      
       const location = await apiService.getCurrentLocation();
       const newJodel = await apiService.setJodel(
         newJodelText,
         location.lat,
         location.lon
       );
-      console.log(`Neues Jodel: ${newJodel}`);
+      
       // setJodels([...jodels, newJodel]); //-> Fehler, da keine ID, hinterlegt ist
       await getAllJodel();
       setIsCreatingPost(false);

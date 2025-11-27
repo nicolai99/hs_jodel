@@ -10,7 +10,7 @@ const CommentPage = () => {
   const getJodel = async() => {
     try {
       const response = await apiService.getJodelById(id);
-      console.log(response);
+      
       setJodel(response);
     } catch (error) {
       console.error("Get jodel by ID / commentpage: ", error);

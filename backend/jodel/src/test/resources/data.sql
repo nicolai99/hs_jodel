@@ -138,7 +138,7 @@ INSERT into
     )
 values (
         1,
-        1,
+        12,
         '60a6cae6-5fb4-4d50-9d16-ced3b3cc82cf',
         'Das ist das erste Jodel von nicolai, cool oder?',
         '2024-05-23 15:30:45'
@@ -193,8 +193,19 @@ values (
         '2024-05-23 15:30:45'
     );
 
+CREATE SEQUENCE IF NOT EXISTS city_id_seq RESTART WITH 21;
+
+CREATE SEQUENCE IF NOT EXISTS jodel_id_seq RESTART WITH 4;
+
+CREATE SEQUENCE IF NOT EXISTS comment_id_seq RESTART WITH 2;
+/*Vote for jodel*/
+-- INSERT into vote (id,f_jodel,f_user,direction) values (1,1,'UserId1',1);
+-- INSERT into vote (id,f_jodel,f_user,direction) values (2,1,'UserId1',-1);
+
+/*SELECT jodel.text AS JodelText, comment.text  AS KommentarText FROM jodel INNER JOIN comment ON jodel.id=comment.f_jodel;*/
+/*SELECT jodel.text , SUM(vote.direction) AS SummeVouts  FROM jodel INNER JOIN vote ON vote.f_jodel=jodel.id  GROUP BY jodel.text;*/
+
+
 ALTER TABLE city ALTER COLUMN id RESTART WITH 21;
-
 ALTER TABLE jodel ALTER COLUMN id RESTART WITH 4;
-
 ALTER TABLE comment ALTER COLUMN id RESTART WITH 2;

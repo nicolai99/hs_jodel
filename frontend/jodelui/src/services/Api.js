@@ -1,6 +1,6 @@
 import keycloak from "./Keycloak";
-const host = process.env.REACT_APP_BASE_URL;
-console.log(host);
+const host = `${process.env.REACT_APP_BASE_URL}/jodel/api`;
+
 
 async function apiRequest(endpoint, options = {}) {
   const { method = "GET", body } = options;
@@ -13,7 +13,7 @@ async function apiRequest(endpoint, options = {}) {
     body: JSON.stringify(body),
   };
 
-  // console.log(host + endpoint);
+  // 
   const request = await fetch(host + endpoint, requestOptions);
   if (!request.ok) {
     throw new Error(request.status);

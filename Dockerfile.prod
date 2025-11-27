@@ -1,0 +1,42 @@
+FROM node:20-alpine AS frontend-build
+WORKDIR /frontend
+
+
+ARG REACT_APP_BASE_URL=http://localhost:8082
+ARG REACT_APP_KEYCLOAK=http://keycloak:8180
+
+COPY frontend/jodelui/package*.json ./
+RUN npm ci --silent
+
+COPY frontend/jodelui/ ./
+
+RUN printf "REACT_APP_BASE_URL=%s\nREACT_APP_KEYCLOAK=%s\n" "${REACT_APP_BASE_URL}" "${REACT_APP_KEYCLOAK}" > .env && \
+    npm run build && \
+    mkdir -p /frontend/out && \
+    if [ -d dist ]; then cp -a dist/. /frontend/out; \
+    elif [ -d build ]; then cp -a build/. /frontend/out; \
+    else echo "No frontend build output found"; fi
+
+
+FROM maven:3.8.4-openjdk-17 AS maven-deps
+WORKDIR /workspace
+
+COPY backend/jodel/pom.xml /workspace/
+RUN mvn dependency:go-offline -B
+
+FROM maven:3.8.4-openjdk-17 AS build
+WORKDIR /workspace
+
+COPY --from=maven-deps /root/.m2 /root/.m2
+
+COPY backend/jodel/pom.xml /workspace/
+COPY backend/jodel/src /workspace/src
+COPY --from=frontend-build /frontend/out /workspace/src/main/resources/static
+
+RUN mvn package -DskipTests -B
+
+
+FROM eclipse-temurin:17
+COPY --from=build /workspace/target/*.jar app.jar
+EXPOSE 8082
+ENTRYPOINT ["java","-jar","app.jar"]

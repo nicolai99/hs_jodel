@@ -45,7 +45,7 @@ const AccountPage = () => {
 
   const keyLogout = () => {
     keycloak.logout({
-      redirectUri: "http://localhost:3000/account",
+      redirectUri: `${process.env.REACT_APP_BASE_URL}/account`,
     });
   };
 

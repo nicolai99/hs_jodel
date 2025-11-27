@@ -55,3 +55,7 @@ Lokal installieren
 npm install -g @dbml/cli
 sql2dbml jodelDump.sql --postgres -o out.dbml
 .dbml mit diverser Software als Diagramm darstellbar
+
+## Produktiv mit H2 Db
+
+docker build --build-arg REACT_APP_BASE_URL="AppBaseUrl" --build-arg REACT_APP_KEYCLOAK="KeycloakBaseUrl" -f Dockerfile.prod

@@ -18,7 +18,7 @@ function Comments({ jodel }) {
 
   const getComments = async () => {
     const response = await apiService.getJodelById(jodel.id);
-    console.log(response.comments);
+    
     setComments(response.comments);
   };
 
